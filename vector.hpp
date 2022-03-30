@@ -1,10 +1,13 @@
 #ifndef VECTOR_HPP
 # define VECTOR_HPP
-# include <memory>
-# include <limits>
+#include <iostream>
+// #include <cstddef> // size_t , ?ptrdiff_t
+#include <memory> // allocator
+#include <exception> // exception
+#include <cstring> // ?memmove
+#include <limits>
 # include <iostream>
-# include <iterator>
-
+// # include <iterator>
 
 namespace ft {
 	template < class T, class Allocator = std::allocator<T> >
@@ -39,18 +42,20 @@ namespace ft {
 					_alloc.construct(_ptr + i, val);
 				}
 			}
-			template <class InputIterator>
-         	vector (InputIterator first, InputIterator last,
-                 const allocator_type& alloc = allocator_type()) : _alloc(alloc), _size(0), _capacity(0), _ptr(0)
-			{
-				_size, _capacity = std::distance(first, last);
-				_ptr = _alloc.allocate(_size);
-				for (size_type i = 0; i < _size; i++)
-				{
-					_alloc.construct(_ptr + i, *first++);
-				}
+			// template <class InputIterator>
+         	// vector (InputIterator first, InputIterator last,
+            //      const allocator_type& alloc = allocator_type()) : _alloc(alloc), _size(0), _capacity(0), _ptr(0)
+			// {
+			// 	_capacity = std::distance(first, last);
+			// 	_size = _capacity;
+			// 	_ptr = _alloc.allocate(_size);
+			// 	for (size_type i = 0; i < _size; i++)
+			// 	{
+			// 		_alloc.construct(_ptr + i, first);
+			// 		first++;
+			// 	}
 
-			}
+			// }
 			vector (const vector& x) : _alloc(x._alloc), _size(x._size), _capacity(x._capacity), _ptr(x._ptr)
 			{
 				_ptr = _alloc.allocate(_size);
@@ -63,8 +68,8 @@ namespace ft {
 			~vector()
 			{
 				clear();
-				_alloc.dealocate(_ptr, _capacity);
-				_capacity, _ptr = 0;
+				_alloc.deallocate(_ptr, _capacity);
+				_capacity = 0;
 			}
 			//OPERATOR = -----------------------------------------------
 			vector& operator= (const vector& x)
