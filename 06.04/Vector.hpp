@@ -68,8 +68,8 @@ namespace ft {
             typedef const T&                          					const_reference;
             typedef T*                                					pointer;
             typedef const T*                          					const_pointer;
-            typedef class ft::VectorIterator<T>								iterator;
-            typedef class ft::ConstVectorIterator<T>      					const_iterator;
+            typedef class ft::iterator<T>								iterator;
+            typedef class ft::const_iterator<T>      					const_iterator;
            	// typedef	class ft::reverse_iterator<iterator>				reverse_iterator;
             // typedef class ft::reverse_iterator<const_iterator>			const_reverse_iterator;
 			// typedef typename ft::VectorIterator<T>::difference_type		difference_type;
@@ -503,7 +503,61 @@ namespace ft {
 				_size += raz;
 			}
 
+			//ERASE ###############################################################################
+			iterator erase(iterator pos )
+			{
+				size_type counter = 0;
 
+				for (iterator it = this->begin(); it != pos; it++) {
+					counter++;
+				}
+				pointer temp = alloc.allocate(_size - 1);
+				size_type j = 0;
+				for (size_type i = 0; i < _size; i++) {
+					if (i != counter) {
+						alloc.construct(temp + j, ptr[i]);
+						j++;
+					}
+				}
+				for (size_type i = 0; i < _size; i++) {
+					alloc.destroy(ptr + i);
+				}
+				alloc.deallocate(ptr, _capacity);
+				ptr = temp;
+				--_size;
+				return (iterator(ptr + counter));
+
+			}
+
+			iterator erase(iterator first, iterator last)
+			{
+				size_type	counter = 0;
+				size_type	sum = 0;
+
+				for (iterator it = this->begin(); it != first; it++) {
+					counter++;
+				}
+				for (iterator it = first; it != last; it++) {
+					sum++;
+				}
+				pointer temp = alloc.allocate(_size - sum);
+				size_type j = 0;
+				for (size_type i = 0; i < _size; i++) {
+					if (i != counter) {
+						alloc.construct(temp + j, ptr[i]);
+						j++;
+					}
+					if (i == counter)
+						i += sum - 1;
+				}
+				for (size_type i = 0; i < _size; i++) {
+					alloc.destroy(ptr + i);
+				}
+				alloc.deallocate(ptr, _capacity);
+				ptr = temp;
+				_size -= sum;
+				return (iterator(ptr));
+			}
 
 
 

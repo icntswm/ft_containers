@@ -296,14 +296,102 @@ void insert_test() {
     std::cout << "\n";
 }
 
+void erase_test()
+{
+    std::cout << "\n --------- iterator erase(iterator pos)\n";
+    std::vector<int> vector1;
+    ft::Vector<int> vec1;
+    ft::Vector<int>::iterator it1;
+    std::vector<int>::iterator it2;
+    
+    vec1.push_back(1);
+    vec1.push_back(2);
+    vec1.push_back(3);
+    vec1.push_back(4);
+    vec1.push_back(5);
+
+    vector1.push_back(1);
+    vector1.push_back(2);
+    vector1.push_back(3);
+    vector1.push_back(4);
+    vector1.push_back(5);
+
+
+    vector1.erase(vector1.end() - 2);
+    vec1.erase(vec1.end() - 2);
+    std::cout << "MY: \n";
+    for (it1 = vec1.begin(); it1 != vec1.end(); it1++) {
+        std::cout << *it1 << " ";
+    }
+
+    std::cout << "\nSTD: \n";
+    for (it2 = vector1.begin(); it2 != vector1.end(); it2++) {
+        std::cout << *it2 << " ";
+    }
+    std::cout << "\n";
+
+    std::cout << "\n --------- iterator erase(iterator first, iterator last)\n";
+    std::vector<int> vector2;
+    ft::Vector<int> vec2;
+    ft::Vector<int>::iterator it3;
+    std::vector<int>::iterator it4;
+    
+    vec2.push_back(1);
+    vec2.push_back(2);
+    vec2.push_back(3);
+    vec2.push_back(4);
+    vec2.push_back(5);
+
+    vector2.push_back(1);
+    vector2.push_back(2);
+    vector2.push_back(3);
+    vector2.push_back(4);
+    vector2.push_back(5);
+
+
+    vector2.erase(vector2.begin() + 1, vector2.end() - 1);
+    vec2.erase(vec2.begin() + 1, vec2.end() - 1);
+    std::cout << "MY: \n";
+    for (it3 = vec2.begin(); it3 != vec2.end(); it3++) {
+        std::cout << *it3 << " ";
+    }
+
+    std::cout << "\nSTD: \n";
+    for (it4 = vector2.begin(); it4 != vector2.end(); it4++) {
+        std::cout << *it4 << " ";
+    }
+    std::cout << "\n";
+}
+
 int main(){
 
     // insert_test();
+    erase_test();
+
+
+
+//-------------------------------------------------------------------------------- ITERATORS
+    // // std::vector<int> vec1;
+    // // ft::Vector<int> vector;
+    // // std::vector<int>::reverse_iterator it;
+    // // ft::Vector<int>::reverse_iterator it1;
+
+    // // vec.push_back(1);
+    // // vec.push_back(2);
+    // // vec.push_back(3);
+    // // vec.push_back(4);
+    // // vec.push_back(5);
+
+    // // vector.push_back(1);
+    // // vector.push_back(2);
+    // // vector.push_back(3);
+    // // vector.push_back(4);
+    // // vector.push_back(5);
 
     // std::vector<int> vec;
     // ft::Vector<int> vector;
-    // std::vector<int>::reverse_iterator it;
-    // ft::Vector<int>::reverse_iterator it1;
+    // std::vector<int>::const_iterator rev_it;
+    // ft::Vector<int>::const_iterator rev_it1;
 
     // vec.push_back(1);
     // vec.push_back(2);
@@ -316,50 +404,32 @@ int main(){
     // vector.push_back(3);
     // vector.push_back(4);
     // vector.push_back(5);
-
-
-    std::vector<int> vec;
-    ft::Vector<int> vector;
-    std::vector<int>::const_iterator rev_it;
-    ft::Vector<int>::const_iterator rev_it1;
-
-    vec.push_back(1);
-    vec.push_back(2);
-    vec.push_back(3);
-    vec.push_back(4);
-    vec.push_back(5);
-
-    vector.push_back(1);
-    vector.push_back(2);
-    vector.push_back(3);
-    vector.push_back(4);
-    vector.push_back(5);
     
-    // std::cout << "reverse iterator: \n";
+    // // std::cout << "reverse iterator: \n";
+    // // std::cout << "MY: \n";
+    // // for (it1 = ++vector.rbegin(); it1 != vector.rend() - 2; it1++) {
+    // //     std::cout << *it1 << " ";
+    // // }
+
+    // // std::cout << "\nSTD: \n";
+    // // for (it = ++vec.rbegin(); it != vec.rend() -2; it++) {
+    // //     std::cout << *it << " ";
+    // // }
+    // // std::cout << "\n";
+
+    // std::cout << "const reverse iterator: \n";
     // std::cout << "MY: \n";
-    // for (it1 = ++vector.rbegin(); it1 != vector.rend() - 2; it1++) {
-    //     std::cout << *it1 << " ";
+    // for (rev_it1 = vector.begin(); rev_it1 != vector.end(); rev_it1++) {
+    //     std::cout << "lol\n";
+    //     std::cout << *rev_it1 << " ";
     // }
 
     // std::cout << "\nSTD: \n";
-    // for (it = ++vec.rbegin(); it != vec.rend() -2; it++) {
-    //     std::cout << *it << " ";
+    // for (rev_it = vec.begin(); rev_it != vec.end(); rev_it++) {
+    //     std::cout << *rev_it << " ";
     // }
     // std::cout << "\n";
-
-    std::cout << "const reverse iterator: \n";
-    std::cout << "MY: \n";
-    for (rev_it1 = vector.begin(); rev_it1 != vector.end(); rev_it1++) {
-        std::cout << "lol\n";
-        std::cout << *rev_it1 << " ";
-    }
-
-    std::cout << "\nSTD: \n";
-    for (rev_it = vec.begin(); rev_it != vec.end(); rev_it++) {
-        std::cout << *rev_it << " ";
-    }
-    std::cout << "\n";
-			
+//-------------------------------------------------------------------------------------------		
 
     // int _ratio = 10000;
     // std::vector<int> vector4;
