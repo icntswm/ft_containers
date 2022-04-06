@@ -223,7 +223,7 @@ namespace ft {
                 --(*this);//++
                 return (temp);
             }
-            reverse_iterator operator+ (difference_type n) const
+            reverse_iterator operator+ (difference_type n)
             {
                 return (reverse_iterator(_ittype - n));
             }

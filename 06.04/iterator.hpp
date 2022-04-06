@@ -3,105 +3,6 @@
 
 #include "iterator_traits.hpp"
 
-// namespace ft {
-// 	template<class T>
-//     class VectorIterator {
-//         public:
-//             typedef typename ft::iterator_traits<T *>::value_type 			value_type;
-// 			typedef typename ft::iterator_traits<T *>::reference 			reference;
-// 			typedef typename ft::iterator_traits<T *>::pointer				pointer;
-// 			typedef typename ft::iterator_traits<T *>::difference_type		difference_type;
-// 			typedef typename ft::iterator_traits<T *>::iterator_category	iterator_category;
-// 			typedef typename ft::iterator_traits<T *>::pointer				iterator_type;
-//         protected:
-//             pointer p;
-//         public:
-//             VectorIterator() {}
-//             ~VectorIterator() {}
-//             VectorIterator(pointer _ptr) : p(_ptr) {}
-//             VectorIterator(const VectorIterator & other) {*this = other;}
-//             VectorIterator & operator=(const VectorIterator & other) {
-//                 if (this != &other)
-//                     p = other.p;
-//                 return *this;
-//             }
-//             bool operator>(const VectorIterator & other) const {return p > other.p;}
-//             bool operator>=(const VectorIterator & other) const {return p >= other.p;}
-//             bool operator<(const VectorIterator & other) const {return p < other.p;}
-//             bool operator<=(const VectorIterator & other) const {return p <= other.p;}
-//             bool operator==(const VectorIterator & other) const {return p == other.p;}
-//             bool operator!=(const VectorIterator & other) const {return p != other.p;}
-//             reference operator*() {return *this->p;}
-//             pointer operator->() {return &p;}
-//             VectorIterator & operator++() {p++; return *this;}
-//             VectorIterator & operator--() {p--; return *this;}
-//             VectorIterator operator++(int) {
-//                 VectorIterator  res(*this);
-
-//                 *this = operator++();
-//                 return res;
-//             }
-//             VectorIterator operator--(int) {
-//                 VectorIterator res(*this);
-
-//                 *this = operator--();
-//                 return res;
-//             }
-//             VectorIterator operator+(int n) {
-//                 VectorIterator temp(*this);
-
-//                 temp += n;
-//                 return temp;
-//             }
-//             VectorIterator operator-(int n) {
-//                 VectorIterator temp(*this);
-
-//                 temp -= n;
-//                 return temp;
-//             }
-//             VectorIterator & operator+=(int n) {
-//                 if (n >= 0)
-//                     while (n--)
-//                         (*this)++;
-//                 else
-//                     while (n++)
-//                         (*this)++;
-// 				return *this;
-//             }
-//             VectorIterator & operator-=(int n) {
-//                 if (n >= 0)
-//                     while (n--)
-//                         (*this)--;
-//                 else
-//                     while (n++)
-//                         (*this)--;
-// 				return *this;
-//             }
-//             reference operator[](int i) {return *(*this + i);}
-//     };
-    
-//     template<class T>
-//     class ConstVectorIterator: public VectorIterator<T> {
-//         public:
-// 		 	typedef typename VectorIterator<T>::reference     		reference;
-//             typedef typename VectorIterator<T>::pointer       		pointer;   
-//             typedef const typename VectorIterator<T>::reference     const_reference;
-//             typedef const typename VectorIterator<T>::pointer       const_pointer;   
-//             ConstVectorIterator() {}
-//             ~ConstVectorIterator() {}
-//             ConstVectorIterator(pointer _p) : VectorIterator<T>(_p) {}
-//             ConstVectorIterator(const ConstVectorIterator & other) {*this = other;}
-//             ConstVectorIterator & operator=(const ConstVectorIterator & other) {
-//                 if (this != &other)
-//                     this->p = other.p;
-//                 return *this;
-//             }
-//             const_reference operator*() {return *this->p;}
-//             const_pointer operator->() {return this->p;}
-//             const_reference operator[](int i) {return *(*this + i);}
-//     };
-// }
-
 namespace ft {
     template<class Iterator>
     class iterator {
@@ -217,13 +118,13 @@ namespace ft {
     class const_iterator : public iterator<Iterator>
     {
         public:
-            // typedef typename iterator<Iterator>::reference     		reference;
-            // typedef typename iterator<Iterator>::pointer       		pointer;   
+            typedef typename iterator<Iterator>::reference     		reference;
+            typedef typename iterator<Iterator>::pointer       		pointer;   
             typedef const typename iterator<Iterator>::reference     const_reference;
             typedef const typename iterator<Iterator>::pointer       const_pointer;   
             const_iterator() {}
             ~const_iterator() {}
-            const_iterator(pointer p) : iterator<Iterator>(p) {}
+            const_iterator(pointer p) : ft::iterator<Iterator>(p) {}
             const_iterator(const const_iterator & other)
             {
                 *this = other;
@@ -240,7 +141,7 @@ namespace ft {
             const_pointer operator->()
             {
                 return (this->point);
-            }   
+            }
             const_reference operator[](int i) 
             {
                 return *(*this + i);

@@ -203,7 +203,7 @@ public:
 };
 
 void insert_test() {
-    std::cout << "\n --------- iterator insert (iterator position, const_reference val)\n";
+    std::cout << "\033[31m\n --------- iterator insert (iterator position, const_reference val)\033[0m\n";
     ft::Vector<int> vec1;
     std::vector<int> vector1;
 
@@ -232,7 +232,7 @@ void insert_test() {
     std::cout << "\n";
 
 
-    std::cout << "\n --------- void insert(iterator pos, size_type count, const_reference value) \n";
+    std::cout << "\033[31m\n --------- void insert(iterator pos, size_type count, const_reference value)\033[0m\n";
     ft::Vector<int> vec2;
     std::vector<int> vector2;
 
@@ -261,7 +261,7 @@ void insert_test() {
     std::cout << "\n";
 
 
-    std::cout << "\n --------- template< class InputIt > void insert(iterator pos, InputIt first, InputIt last)\n";
+    std::cout << "\033[31m\n --------- template< class InputIt > void insert(iterator pos, InputIt first, InputIt last)\033[0m\n";
     ft::Vector<int> vec3;
     std::vector<int> vector3;
     std::vector<int> tmp;
@@ -298,7 +298,7 @@ void insert_test() {
 
 void erase_test()
 {
-    std::cout << "\n --------- iterator erase(iterator pos)\n";
+    std::cout << "\033[31m\n --------- iterator erase(iterator pos)\033[0m\n";
     std::vector<int> vector1;
     ft::Vector<int> vec1;
     ft::Vector<int>::iterator it1;
@@ -330,7 +330,7 @@ void erase_test()
     }
     std::cout << "\n";
 
-    std::cout << "\n --------- iterator erase(iterator first, iterator last)\n";
+    std::cout << "\033[31m\n --------- iterator erase(iterator first, iterator last)\033[0m\n";
     std::vector<int> vector2;
     ft::Vector<int> vec2;
     ft::Vector<int>::iterator it3;
@@ -363,10 +363,548 @@ void erase_test()
     std::cout << "\n";
 }
 
-int main(){
+void swap_test() {
+    std::cout << "\033[31m\n --------- void swap(Vector & other)\033[0m\n";
+    int _ratio = 10000;
+    ft::Vector<int> my_vector;
+    std::vector<int> v;
+    my_vector.assign(1100 * _ratio, 11);
+    ft::Vector<int> tmp1(500 * _ratio, 5), tmp2(1000 * _ratio, 10), tmp3(1500 * _ratio, 15), tmp4(3000 * _ratio, 30);
+    v.push_back(my_vector[2]);
+    v.push_back(my_vector.size());
+    v.push_back(my_vector.capacity());
+    long *adr1 = reinterpret_cast<long *>(&my_vector);
+    long *adr2 = reinterpret_cast<long *>(&tmp1);
+    my_vector.swap(tmp1);
+    if (reinterpret_cast<long *>(&my_vector) == adr1 && reinterpret_cast<long *>(&tmp1) == adr2)
+    	v.push_back(1);
+    v.push_back(my_vector[2]);
+    v.push_back(my_vector.size());
+    v.push_back(my_vector.capacity());
+    my_vector.swap(tmp3);
+    v.push_back(my_vector[2]);
+    v.push_back(my_vector.size());
+    v.push_back(my_vector.capacity());
+    std::swap(my_vector, tmp2);
+    v.push_back(my_vector[2]);
+    v.push_back(my_vector.size());
+    v.push_back(my_vector.capacity());
+    std::swap(my_vector, tmp4);
+    v.push_back(my_vector[2]);
+    v.push_back(my_vector.size());
+    v.push_back(my_vector.capacity());
 
-    // insert_test();
-    erase_test();
+    std::vector<int>::iterator vit;
+    std::cout << "MY: \n";
+    for (vit = v.begin(); vit != v.end(); vit++){
+        std::cout << *vit << " ";
+    }
+
+    std::vector<int> std_vector;
+    std::vector<int> vv;
+    std_vector.assign(1100 * _ratio, 11);
+    std::vector<int> tmp5(500 * _ratio, 5), tmp6(1000 * _ratio, 10), tmp7(1500 * _ratio, 15), tmp8(3000 * _ratio, 30);
+    vv.push_back(std_vector[2]);
+    vv.push_back(std_vector.size());
+    vv.push_back(std_vector.capacity());
+    long *adr3 = reinterpret_cast<long *>(&std_vector);
+    long *adr4 = reinterpret_cast<long *>(&tmp5);
+    std_vector.swap(tmp5);
+    if (reinterpret_cast<long *>(&std_vector) == adr3 && reinterpret_cast<long *>(&tmp5) == adr4)
+    	vv.push_back(1);
+    vv.push_back(std_vector[2]);
+    vv.push_back(std_vector.size());
+    vv.push_back(std_vector.capacity());
+    std_vector.swap(tmp7);
+    vv.push_back(std_vector[2]);
+    vv.push_back(std_vector.size());
+    vv.push_back(std_vector.capacity());
+    std::swap(std_vector, tmp6);
+    vv.push_back(std_vector[2]);
+    vv.push_back(std_vector.size());
+    vv.push_back(std_vector.capacity());
+    std::swap(std_vector, tmp8);
+    vv.push_back(std_vector[2]);
+    vv.push_back(std_vector.size());
+    vv.push_back(std_vector.capacity());
+
+    std::vector<int>::iterator stdvit;
+    std::cout << "\nSTD: \n";
+    for (stdvit = vv.begin(); stdvit != vv.end(); stdvit++){
+        std::cout << *stdvit << " ";
+    }
+    std::cout << "\n";
+}
+
+void    assign_test()
+{
+    std::cout << "\033[31m\n --------- void assign(size_type count, const_reference value)\033[0m\n";
+    std::vector<int> vect2;
+    ft::Vector<int> vecc2;
+    ft::Vector<int>::iterator iter3;
+    std::vector<int>::iterator iter4;
+    
+    vecc2.push_back(1);
+    vecc2.push_back(2);
+    vecc2.push_back(3);
+
+    vect2.push_back(1);
+    vect2.push_back(2);
+    vect2.push_back(3);
+
+
+    vecc2.assign(5, 7);
+    vect2.assign(5, 7);
+    std::cout << "MY: \n";
+    for (iter3 = vecc2.begin(); iter3 != vecc2.end(); iter3++) {
+        std::cout << *iter3 << " ";
+    }
+
+    std::cout << "\nSTD: \n";
+    for (iter4 = vect2.begin(); iter4 != vect2.end(); iter4++) {
+        std::cout << *iter4 << " ";
+    }
+    std::cout << "\n";
+
+
+
+    std::cout << "\033[31m\n --------- template<class InputIt> void assign(InputIt first, InputIt last)\033[0m\n";
+    std::vector<int> tmp;
+
+    tmp.push_back(11);
+    tmp.push_back(12);
+    tmp.push_back(13);
+
+    vecc2.assign(tmp.begin(), tmp.end() - 1);
+    vect2.assign(tmp.begin(), tmp.end() - 1);
+    std::cout << "MY: \n";
+    for (iter3 = vecc2.begin(); iter3 != vecc2.end(); iter3++) {
+        std::cout << *iter3 << " ";
+    }
+
+    std::cout << "\nSTD: \n";
+    for (iter4 = vect2.begin(); iter4 != vect2.end(); iter4++) {
+        std::cout << *iter4 << " ";
+    }
+    std::cout << "\n";
+}
+
+void at_test()
+{
+    std::cout << "\033[31m\n --------- reference at(size_type pos)\033[0m\n";
+    std::vector<int> vect2;
+    ft::Vector<int> vecc2;
+    ft::Vector<int>::iterator iter3;
+    std::vector<int>::iterator iter4;
+    
+    vecc2.push_back(1);
+    vecc2.push_back(2);
+    vecc2.push_back(3);
+
+    vect2.push_back(1);
+    vect2.push_back(2);
+    vect2.push_back(3);
+
+    std::cout << "MY: \n";
+    std::cout << vecc2.at(0);
+
+    std::cout << "\nSTD: \n";
+    std::cout << vect2.at(0);
+    std::cout << "\n";
+}
+
+void back_test()
+{
+    std::cout << "\033[31m\n --------- reference back()\033[0m\n";
+    std::vector<int> vect2;
+    ft::Vector<int> vecc2;
+    ft::Vector<int>::iterator iter3;
+    std::vector<int>::iterator iter4;
+    
+    vecc2.push_back(1);
+    vecc2.push_back(2);
+    vecc2.push_back(3);
+
+    vect2.push_back(1);
+    vect2.push_back(2);
+    vect2.push_back(3);
+
+    std::cout << "MY: \n";
+    std::cout << vecc2.back();
+
+    std::cout << "\nSTD: \n";
+    std::cout << vect2.back();
+    std::cout << "\n";
+}
+
+void begin_end_test()
+{
+    std::cout << "\033[31m\n --------- iterator begin() && iterator end()\033[0m\n";
+    std::vector<int> vect2;
+    ft::Vector<int> vecc2;
+    ft::Vector<int>::iterator iter3;
+    std::vector<int>::iterator iter4;
+    
+    vecc2.push_back(1);
+    vecc2.push_back(2);
+    vecc2.push_back(3);
+
+    vect2.push_back(1);
+    vect2.push_back(2);
+    vect2.push_back(3);
+
+    std::cout << "MY: \n";
+    for (iter3 = vecc2.begin() + 1; iter3 != vecc2.end(); iter3++) {
+        std::cout << *iter3 << " ";
+    }
+
+    std::cout << "\nSTD: \n";
+    for (iter4 = vect2.begin() + 1; iter4 != vect2.end(); iter4++) {
+        std::cout << *iter4 << " ";
+    }
+    std::cout << "\n";
+}
+
+void capacity_test()
+{
+    std::cout << "\033[31m\n --------- size_type capacity()\033[0m\n";
+    std::vector<int> vect2;
+    ft::Vector<int> vecc2;
+    ft::Vector<int>::iterator iter3;
+    std::vector<int>::iterator iter4;
+    
+    vecc2.push_back(1);
+    vecc2.push_back(2);
+    vecc2.push_back(3);
+
+    vect2.push_back(1);
+    vect2.push_back(2);
+    vect2.push_back(3);
+
+    vecc2.assign(111, 1);
+    vect2.assign(111, 1);
+    std::cout << "MY: \n";
+    std::cout << vecc2.capacity();
+
+    std::cout << "\nSTD: \n";
+    std::cout << vect2.capacity();
+    std::cout << "\n";
+}
+
+void clear_test()
+{
+    std::cout << "\033[31m\n --------- void clear()\033[0m\n";
+    std::vector<int> vect2;
+    ft::Vector<int> vecc2;
+    ft::Vector<int>::iterator iter3;
+    std::vector<int>::iterator iter4;
+    
+    vecc2.push_back(1);
+    vecc2.push_back(2);
+    vecc2.push_back(3);
+
+    vect2.push_back(1);
+    vect2.push_back(2);
+    vect2.push_back(3);
+
+
+    std::cout << "MY before: \n";
+    for (iter3 = vecc2.begin(); iter3 != vecc2.end(); iter3++) {
+        std::cout << *iter3 << " ";
+    }
+
+    std::cout << "\nSTD before: \n";
+    for (iter4 = vect2.begin(); iter4 != vect2.end(); iter4++) {
+        std::cout << *iter4 << " ";
+    }
+    vecc2.clear();
+    vect2.clear();
+    std::cout << "\nMY after: \n";
+    for (iter3 = vecc2.begin(); iter3 != vecc2.end(); iter3++) {
+        std::cout << *iter3 << " ";
+    }
+
+    std::cout << "\nSTD after: \n";
+    for (iter4 = vect2.begin(); iter4 != vect2.end(); iter4++) {
+        std::cout << *iter4 << " ";
+    }
+    std::cout << "\n";
+}
+
+void data_test()
+{
+    std::cout << "\033[31m\n --------- pointer data()\033[0m\n";
+    std::vector<int> vect2;
+    ft::Vector<int> vecc2;
+    ft::Vector<int>::iterator iter3;
+    std::vector<int>::iterator iter4;
+    
+    vecc2.push_back(17);
+    vecc2.push_back(27);
+    vecc2.push_back(37);
+
+    vect2.push_back(17);
+    vect2.push_back(27);
+    vect2.push_back(37);
+
+    std::cout << "MY: \n";
+    std::cout << *vecc2.data();
+
+    std::cout << "\nSTD: \n";
+    std::cout << *vect2.data();
+    std::cout << "\n";
+}
+
+void empty_test()
+{
+    std::cout << "\033[31m\n --------- bool empty() const\033[0m\n";
+    std::vector<int> vect2;
+    ft::Vector<int> vecc2;
+    ft::Vector<int>::iterator iter3;
+    std::vector<int>::iterator iter4;
+    
+    // vecc2.push_back(1);
+    // vecc2.push_back(2);
+    // vecc2.push_back(3);
+
+    // vect2.push_back(1);
+    // vect2.push_back(2);
+    // vect2.push_back(3);
+
+    std::cout << "MY: \n";
+    std::cout << vecc2.empty();
+
+    std::cout << "\nSTD: \n";
+    std::cout << vect2.empty();
+    std::cout << "\n";
+}
+
+void front_test()
+{
+    std::cout << "\033[31m\n --------- reference front()\033[0m\n";
+    std::vector<int> vect2;
+    ft::Vector<int> vecc2;
+    ft::Vector<int>::iterator iter3;
+    std::vector<int>::iterator iter4;
+    
+    vecc2.push_back(11);
+    vecc2.push_back(22);
+    vecc2.push_back(33);
+
+    vect2.push_back(11);
+    vect2.push_back(22);
+    vect2.push_back(33);
+
+    std::cout << "MY: \n";
+    std::cout << vecc2.front();
+
+    std::cout << "\nSTD: \n";
+    std::cout << vect2.front();
+    std::cout << "\n";
+}
+
+void max_size_test()
+{
+    std::cout << "\033[31m\n --------- size_type size() const && size_type max_size() const\033[0m\n";
+    std::vector<int> vect2;
+    ft::Vector<int> vecc2;
+    ft::Vector<int>::iterator iter3;
+    std::vector<int>::iterator iter4;
+    
+    vecc2.push_back(1);
+    vecc2.push_back(2);
+    vecc2.push_back(3);
+
+    vect2.push_back(1);
+    vect2.push_back(2);
+    vect2.push_back(3);
+
+    vecc2.assign(111, 1);
+    vect2.assign(111, 1);
+    std::cout << "MY: \n";
+    std::cout << vecc2.size() << " / " << vecc2.max_size();
+
+    std::cout << "\nSTD: \n";
+    std::cout << vect2.size() << " / " << vect2.max_size();
+    std::cout << "\n";
+}
+
+void operator_equals_test()
+{
+    std::cout << "\033[31m\n --------- Vector & operator=(const Vector & other)\033[0m\n";
+    std::vector<int> vect2;
+    ft::Vector<int> vecc2;
+    ft::Vector<int>::iterator iter3;
+    std::vector<int>::iterator iter4;
+    ft::Vector<int> temp_vecc;
+    std::vector<int> temp_vect;
+    
+    vecc2.push_back(11);
+    vecc2.push_back(22);
+    vecc2.push_back(33);
+
+    vect2.push_back(11);
+    vect2.push_back(22);
+    vect2.push_back(33);
+
+    temp_vecc = vecc2;
+    temp_vect = vect2;
+    std::cout << "MY: \n";
+    for (iter3 = temp_vecc.begin(); iter3 != temp_vecc.end(); iter3++) {
+        std::cout << *iter3 << " ";
+    }
+
+    std::cout << "\nSTD: \n";
+    for (iter4 = temp_vect.begin(); iter4 != temp_vect.end(); iter4++) {
+        std::cout << *iter4 << " ";
+    }
+    std::cout << "\n";
+}
+
+void operator_squarebrek_test()
+{
+    std::cout << "\033[31m\n --------- reference operator[](size_type pos)\033[0m\n";
+    std::vector<int> vect2;
+    ft::Vector<int> vecc2;
+    
+    vecc2.push_back(11);
+    vecc2.push_back(22);
+    vecc2.push_back(33);
+
+    vect2.push_back(11);
+    vect2.push_back(22);
+    vect2.push_back(33);
+
+    std::cout << "MY: \n";
+    std::cout << vecc2[1];
+
+    std::cout << "\nSTD: \n";
+    std::cout << vect2[1];
+    std::cout << "\n";
+}
+
+void pop_push_back_test()
+{
+    std::cout << "\033[31m\n --------- void pop_back() && void push_back(const_reference value)\033[0m\n";
+    std::vector<int> vect2;
+    ft::Vector<int> vecc2;
+    ft::Vector<int>::iterator iter3;
+    std::vector<int>::iterator iter4;
+    
+    vecc2.push_back(11);
+    vecc2.push_back(22);
+    vecc2.push_back(33);
+
+    vect2.push_back(11);
+    vect2.push_back(22);
+    vect2.push_back(33);
+
+    vecc2.pop_back();
+    vect2.pop_back();    
+    std::cout << "MY: \n";
+    for (iter3 = vecc2.begin(); iter3 != vecc2.end(); iter3++) {
+        std::cout << *iter3 << " ";
+    }
+
+    std::cout << "\nSTD: \n";
+    for (iter4 = vect2.begin(); iter4 != vect2.end(); iter4++) {
+        std::cout << *iter4 << " ";
+    }
+    std::cout << "\n";
+}
+
+void rbegin_rend_test()
+{
+    std::cout << "\033[31m\n --------- reverse_iterator rbegin() && reverse_iterator rend()\033[0m\n";
+    std::vector<int> vect2;
+    ft::Vector<int> vecc2;
+    ft::Vector<int>::reverse_iterator iter3;
+    std::vector<int>::reverse_iterator iter4;
+    
+    vecc2.push_back(1);
+    vecc2.push_back(2);
+    vecc2.push_back(3);
+    vecc2.push_back(4);
+
+    vect2.push_back(1);
+    vect2.push_back(2);
+    vect2.push_back(3);
+    vect2.push_back(4);
+
+    std::cout << "MY: \n";
+    for (iter3 = vecc2.rbegin() + 1; iter3 != vecc2.rend() - 1; iter3++) {
+        std::cout << *iter3 << " ";
+    }
+
+    std::cout << "\nSTD: \n";
+    for (iter4 = vect2.rbegin() + 1; iter4 != vect2.rend() - 1; iter4++) {
+        std::cout << *iter4 << " ";
+    }
+    std::cout << "\n";
+}
+
+void reserve_test()
+{
+    std::cout << "\033[31m\n --------- void reserve(size_type n)\033[0m\n";
+    std::vector<int> vect2;
+    ft::Vector<int> vecc2;
+    
+   
+
+    vecc2.reserve(1221);
+    vect2.reserve(1221);
+    std::cout << "MY: \n";
+    std::cout << vecc2.capacity();
+
+    std::cout << "\nSTD: \n";
+    std::cout << vect2.capacity();
+    std::cout << "\n";
+}
+
+void resize_test()
+{
+    std::cout << "\033[31m\n --------- void resize (size_type n, value_type val = value_type())\033[0m\n";
+    std::vector<int> vect2;
+    ft::Vector<int> vecc2;
+    ft::Vector<int>::reverse_iterator iter3;
+    std::vector<int>::reverse_iterator iter4;
+    
+    vecc2.resize(17, 4);
+    vect2.resize(17, 4);
+    std::cout << "MY: \n";
+    std::cout << vecc2.size() << "\n";
+    for (iter3 = vecc2.rbegin() + 1; iter3 != vecc2.rend() - 1; iter3++) {
+        std::cout << *iter3 << " ";
+    }
+
+    std::cout << "\nSTD: \n";
+    std::cout << vect2.size() << "\n";
+    for (iter4 = vect2.rbegin() + 1; iter4 != vect2.rend() - 1; iter4++) {
+        std::cout << *iter4 << " ";
+    }
+    std::cout << "\n";
+}
+
+int main(){
+    assign_test();                  //++
+    at_test();                      //+-
+    back_test();                    //+-
+    begin_end_test();               //+-+-
+    capacity_test();                //+
+    clear_test();                   //+
+    data_test();                    //+-
+    empty_test();                   //+
+    erase_test();                   //++
+    front_test();                   //+-
+    insert_test();                  //+++
+    max_size_test();                //+
+    operator_equals_test();         //+
+    operator_squarebrek_test();     //+-
+    pop_push_back_test();           //++
+    rbegin_rend_test();             //+-+-
+    reserve_test();                 //+
+    resize_test();                  //+
+    swap_test();                    //+
 
 
 
