@@ -4,6 +4,32 @@
 #include <iostream>
 
 namespace ft {
+    enum COLOR{BLACK, RED};
+
+    template<class T>
+	struct node_tree {
+		typedef T	data_type;
+		data_type*  data;
+		node_tree*	parent;
+		node_tree*  left;
+		node_tree*	right;
+		COLOR       color;
+		
+		explicit node_tree(data_type* d = nullptr) : data(d), parent(nullptr), left(nullptr), right(nullptr), color(RED) {}
+		node_tree(const node_tree& nt)
+		{
+			*this = nt;
+		}
+		node_tree& operator=(const node_tree& nt) {
+			data = nt.data;
+			right = nt.right;
+			left = nt.left;
+			parent = nt.parent;
+			color = nt.color;
+			return (*this);
+		}
+	};
+
     template <class Iterator>
     class iterator_traits {
         public:
