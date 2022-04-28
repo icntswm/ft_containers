@@ -9,13 +9,13 @@ namespace ft {
     template<class T>
 	struct node_tree {
 		typedef T	data_type;
-		data_type*  data;
+		data_type   data;
 		node_tree*	parent;
 		node_tree*  left;
 		node_tree*	right;
 		COLOR       color;
 		
-		explicit node_tree(data_type* d = nullptr) : data(d), parent(nullptr), left(nullptr), right(nullptr), color(RED) {}
+		explicit node_tree(data_type& d = nullptr) : data(d), parent(nullptr), left(nullptr), right(nullptr), color(RED) {}
 		node_tree(const node_tree& nt)
 		{
 			*this = nt;
@@ -169,11 +169,22 @@ namespace ft {
 
         pair& operator= (const pair& pr)
         {
-            first = pr.first;
-            second = pr.second;
+            if (this != &pr) {
+                first = pr.first;
+                second = pr.second;
+            }
             return (*this);
         }
     };
+
+
+
+
+
+
+
+
+
     template <class T1, class T2>
     bool operator== (const pair<T1,T2>& lhs, const pair<T1,T2>& rhs)
     {
