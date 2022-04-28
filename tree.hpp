@@ -548,8 +548,19 @@ namespace ft {
 				// }
 				return (*this);
 			}
+			iterator begin()
+			{
+				return iterator(_root);
+			}
+			iterator end()
+			{
+				return iterator(_TNULL);
+			}
+			bool empty() const
+			{
+				return (!_size);
+			}
 			
-
 
 		};
 }

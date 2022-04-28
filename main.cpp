@@ -460,9 +460,9 @@ std::cout << "-----------------------------------------------------\n";
 	bst1.deleteNode(-21);
 	bst1.deleteNode(1);
 	bst1.deleteNode(65);
-	// bst1.deleteNode(55);
-	// bst1.deleteNode(83);
-	// bst1.deleteNode(121);
+	bst1.deleteNode(55);
+	bst1.deleteNode(83);
+	bst1.deleteNode(121);
 	// bst1.deleteNode(57);
 	// bst1.deleteNode(214);
 	// bst1.deleteNode(21);
@@ -473,6 +473,21 @@ std::cout << "-----------------------------------------------------\n";
 	bst1.printTree();
 
 	// std::map<int, int> _map;
-	// std::map<int, int>::iterator it;
-  ft::tree<int,int>::iterator it;
+  // // _map.insert(std::make_pair(55,1));
+  // // _map.insert(std::make_pair(40,1));
+	// // _map.insert(std::make_pair(65,1));
+  // // std::map<int,int>::iterator itstd = _map.begin();
+  // // std::cout << itstd->first << "\n";
+  // // std::cout << itstd->second << "\n";
+
+
+  // ft::tree<int,int>::iterator it = bst1.begin();
+  // // std::cout << *it << "\n";
+  // // ft::tree<int,int>::iterator it_end = bst1.end();
+  // // std::cout << *it_end << "\n";
+  // for (it = bst1.begin(); it != bst1.end(); it++)
+  // {
+  //   std::cout << "LOL\n";
+  //   std::cout << *it << "\n";
+  // }
 }
