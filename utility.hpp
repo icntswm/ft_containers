@@ -4,31 +4,58 @@
 #include <iostream>
 
 namespace ft {
-    enum COLOR{BLACK, RED};
+    // enum COLOR{BLACK, RED};
+
+    // template<class T>
+	// struct node_tree {
+	// 	typedef T	data_type;
+	// 	data_type   data;
+	// 	node_tree*	parent;
+	// 	node_tree*  left;
+	// 	node_tree*	right;
+	// 	COLOR       color;
+		
+	// 	explicit node_tree(data_type& d = nullptr) : data(d), parent(nullptr), left(nullptr), right(nullptr), color(RED) {}
+	// 	node_tree(const node_tree& nt)
+	// 	{
+	// 		*this = nt;
+	// 	}
+	// 	node_tree& operator=(const node_tree& nt) {
+	// 		data = nt.data;
+	// 		right = nt.right;
+	// 		left = nt.left;
+	// 		parent = nt.parent;
+	// 		color = nt.color;
+	// 		return (*this);
+	// 	}
+	// };
+
+
 
     template<class T>
-	struct node_tree {
-		typedef T	data_type;
-		data_type   data;
-		node_tree*	parent;
-		node_tree*  left;
-		node_tree*	right;
-		COLOR       color;
-		
-		explicit node_tree(data_type& d = nullptr) : data(d), parent(nullptr), left(nullptr), right(nullptr), color(RED) {}
-		node_tree(const node_tree& nt)
-		{
-			*this = nt;
-		}
-		node_tree& operator=(const node_tree& nt) {
-			data = nt.data;
-			right = nt.right;
-			left = nt.left;
-			parent = nt.parent;
-			color = nt.color;
-			return (*this);
-		}
-	};
+    struct node_tree {
+        typedef T	data_type;
+        data_type   data;
+        node_tree*	parent;
+        node_tree*  left;
+        node_tree*	right;
+        bool		is_red;
+        
+        explicit node_tree(const data_type& d = nullptr) : data(d), parent(nullptr), left(nullptr), right(nullptr), is_red(true) {}
+        node_tree(const data_type& d, node_tree* par, node_tree* lft, node_tree* rght, bool color) : data(d), parent(par), left(lft), right(rght), is_red(color) {}
+        // node_tree(const node_tree& nt)
+        // {
+        // 	*this = nt;
+        // }
+        // node_tree& operator=(const node_tree& nt) {
+        // 	data = nt.data;
+        // 	right = nt.right;
+        // 	left = nt.left;
+        // 	parent = nt.parent;
+        // 	is_red = nt.is_red;
+        // 	return (*this);
+        // }
+    };
 
     template <class Iterator>
     class iterator_traits {
@@ -165,16 +192,16 @@ namespace ft {
         template<class U, class V>
         pair (const pair<U, V>& pr) : first(pr.first), second(pr.second) {}
         pair (const first_type& a, const second_type& b) : first(a), second(b) {}
-        pair(const pair& p) : first(p.first), second(p.second) {} //?????????????????
+        // pair(const pair& p) : first(p.first), second(p.second) {} //?????????????????
 
-        pair& operator= (const pair& pr)
-        {
-            if (this != &pr) {
-                first = pr.first;
-                second = pr.second;
-            }
-            return (*this);
-        }
+        // pair& operator= (const pair& pr)
+        // {
+        //     if (this != &pr) {
+        //         first = pr.first;
+        //         second = pr.second;
+        //     }
+        //     return (*this);
+        // }
     };
 
 

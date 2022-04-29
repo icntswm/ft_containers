@@ -1,5 +1,6 @@
 #include <iostream>
 #include "tree.hpp"
+
 using namespace std;
 
 //--------------------------------------------------------------------------------------------
@@ -408,86 +409,21 @@ class RedBlackTree {
     }
   }
 };
+#include "map.hpp"
 #include <map>
 int main() {
-//   RedBlackTree bst;
-//   bst.insert(55);
-//   bst.insert(40);
-//   bst.insert(65);
-//   bst.insert(60);
-//   bst.insert(75);
-//   bst.insert(57);
-//   bst.insert(21);
-//   bst.insert(214);
-//   bst.insert(-21);
-//   bst.insert(121);
-//   bst.insert(41);
-//   bst.insert(1);
-//   bst.insert(83);
-
-//   bst.printTree();
-//     cout << endl
-//      << "After deleting" << endl;
-//   bst.deleteNode(40);
-// 	bst.deleteNode(-21);
-// 	bst.deleteNode(1);
-// 	bst.deleteNode(65);
-// 	bst.deleteNode(55);
-//   bst.printTree();
-
-std::cout << "-----------------------------------------------------\n";
-
-	ft::tree<int, int> bst1;
-	bst1.insert(55);
-	bst1.insert(40);
-	bst1.insert(65);
-	bst1.insert(60);
-	bst1.insert(75);
-	bst1.insert(57);
-	bst1.insert(21);
-	bst1.insert(214);
-	bst1.insert(-21);
-	bst1.insert(121);
-	bst1.insert(41);
-	bst1.insert(1);
-	bst1.insert(83);
-
-	std::cout << bst1.getSize() << "\n";
-	bst1.printTree();	
-	cout << endl
-		<< "After deleting" << endl;
-	bst1.deleteNode(40);
-	bst1.deleteNode(-21);
-	bst1.deleteNode(1);
-	bst1.deleteNode(65);
-	bst1.deleteNode(55);
-	bst1.deleteNode(83);
-	bst1.deleteNode(121);
-	// bst1.deleteNode(57);
-	// bst1.deleteNode(214);
-	// bst1.deleteNode(21);
-	// bst1.deleteNode(60);
-	// bst1.deleteNode(75);
-	// bst1.deleteNode(41);
-	std::cout << bst1.getSize() << "\n";
-	bst1.printTree();
-
-	// std::map<int, int> _map;
-  // // _map.insert(std::make_pair(55,1));
-  // // _map.insert(std::make_pair(40,1));
-	// // _map.insert(std::make_pair(65,1));
-  // // std::map<int,int>::iterator itstd = _map.begin();
-  // // std::cout << itstd->first << "\n";
-  // // std::cout << itstd->second << "\n";
 
 
+    ft::tree<int,int> bst1;
+    ft::tree<int,int>::iterator it;
+    std::map<int,int> lol;
+
+    it = bst1.begin();
+    std::cout << *it << "\n";
+    return(0);
+    // bst1.insert(2);
+  // bst1.insert(3);
   // ft::tree<int,int>::iterator it = bst1.begin();
-  // // std::cout << *it << "\n";
-  // // ft::tree<int,int>::iterator it_end = bst1.end();
-  // // std::cout << *it_end << "\n";
-  // for (it = bst1.begin(); it != bst1.end(); it++)
-  // {
-  //   std::cout << "LOL\n";
-  //   std::cout << *it << "\n";
-  // }
+
+  // std::cout << *it << "\n";
 }
