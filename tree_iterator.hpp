@@ -16,7 +16,7 @@ namespace ft {
 		typedef const T*          			  pointer;
 		typedef const T&       					  reference;
 		typedef	node_tree<T>	node;
-
+	public:
 		const node	*_node;
 		const node	*_root;
 	public:
@@ -52,16 +52,16 @@ namespace ft {
 			}
 			else
 			{
-				while (_node->parent and _node->parent->right == _node)
+				while (_node->parent && _node->parent->right == _node)
 					_node = _node->parent;
 				_node = _node->parent;
 			}
-			return *this;
+			return (*this);
 		}
 		RBTreeConstIterator	operator++(int) {
 			RBTreeConstIterator tmp(*this);
 			++(*this);
-			return tmp;
+			return (tmp);
 		}
 		RBTreeConstIterator &	operator--() {
 			if (_node == NULL)
@@ -81,28 +81,24 @@ namespace ft {
 			}
 			else
 			{
-				while (_node->parent and _node->parent->left == _node)
+				while (_node->parent && _node->parent->left == _node)
 					_node = _node->parent;
 				_node = _node->parent;
 			}
-			return *this;
+			return (*this);
 		}
 		RBTreeConstIterator	operator--(int) {
 			RBTreeConstIterator tmp(*this);
 			--(*this);
-			return tmp;
+			return (tmp);
 		}
 
-		friend bool operator==(
-				RBTreeConstIterator lhs,
-				RBTreeConstIterator rhs)
+		friend bool operator==(RBTreeConstIterator lhs, RBTreeConstIterator rhs)
 		{
 			return lhs._node == rhs._node;
 		}
 
-		friend bool operator!=(
-				RBTreeConstIterator lhs,
-				RBTreeConstIterator rhs)
+		friend bool operator!=(RBTreeConstIterator lhs, RBTreeConstIterator rhs)
 		{
 			return lhs._node != rhs._node;
 		}
@@ -116,14 +112,14 @@ namespace ft {
             typedef IteratorType*            pointer;
             typedef IteratorType&          reference;
 			typedef node_tree<IteratorType> 										node;
-
+		public:
 			node* _node;
 			node* _root;
 		public:
 			tree_iterator() {}
 			tree_iterator(node* n, node* r) : _node(n), _root(r) {}
 			tree_iterator(const tree_iterator& it) : _node(it._node), _root(it._root) {}
-			// ~tree_iterator() {}
+			~tree_iterator() {}
 			tree_iterator& operator=(const tree_iterator& it)
 			{
 				_node = it._node;
@@ -162,7 +158,7 @@ namespace ft {
 				}
 				return (*this);
 			}
-			tree_iterator& operator++ (int)
+			tree_iterator operator++ (int)
 			{
 				tree_iterator tmp(*this);
 				++(*this);
@@ -193,7 +189,7 @@ namespace ft {
 				}
 				return (*this);
 			}
-			tree_iterator& operator-- (int)
+			tree_iterator operator-- (int)
 			{
 				tree_iterator tmp(*this);
 				--(*this);

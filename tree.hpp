@@ -609,20 +609,20 @@ public:
 	RBTree( const RBTree& other )
 		: _alloc_value(other._alloc_value), _alloc_node(other._alloc_node), _comp(other._comp), _root(NULL)
 	{
-		_copy_tree(_root, NULL, other._root);
+		copy_tree(_root, NULL, other._root);
 		_size = other._size;
 	}
 	~RBTree()
 	{
-		_clear_tree(_root);
+		clear_tree(_root);
 	}
 
 	RBTree& operator=( const RBTree& other )
 	{
 		node	*tmp_tree = NULL;
 
-		_copy_tree(tmp_tree, NULL, other._root);
-		_clear_tree(_root);
+		copy_tree(tmp_tree, NULL, other._root);
+		clear_tree(_root);
 		_root = tmp_tree;
 		_size = other._size;
 		return *this;
@@ -638,24 +638,26 @@ public:
 
 	iterator		begin()
 	{
-		node    *min = _root;
-		if (min)
+		node    *tmp = _root;
+
+		if (tmp)
 		{
-			while (min->left)
-				min = min->left;
+			while (tmp->left)
+				tmp = tmp->left;
 		}
-		return iterator(min, _root);
+		return iterator(tmp, _root);
 	}
 
 	const_iterator	begin() const
 	{
-		node    *min = _root;
-		if (min)
+		node    *tmp = _root;
+
+		if (tmp)
 		{
-			while (min->left)
-				min = min->left;
+			while (tmp->left)
+				tmp = tmp->left;
 		}
-		return const_iterator(min, _root);
+		return const_iterator(tmp, _root);
 	}
 
 	iterator		end()
@@ -689,13 +691,13 @@ public:
 	}
 	ft::pair<iterator,bool> insert (const value_type& val)
 	{
-		ft::pair<node *, bool>	tmp = _insert_to_tree(&_root, val);
+		ft::pair<node *, bool>	tmp = insert_node(&_root, val);
 		return ft::make_pair(iterator(tmp.first, _root), tmp.second);
 	}
 
 	iterator insert( iterator hint, const value_type& value )
 	{
-		ft::pair<node *, bool>	tmp = _insert_to_tree(&_root, value);
+		ft::pair<node *, bool>	tmp = insert_node(&_root, value);
 		return iterator(tmp.first, _root);
 	}
 
@@ -708,19 +710,19 @@ public:
 
 	void erase( iterator pos )
 	{
-		_erase_node(pos._node);
+		erase_node(pos._node);
 	}
 	void erase( iterator first, iterator last )
 	{
-		for (; first != last; first++)
-			_erase_node(first._node);
+		for (; first != last;)
+			erase_node((first++)._node);
 	}
 	size_type erase( const value_type& key )
 	{
-		node*	_node = find_node(key);
-		if (_node)
+		iterator it = find(key);
+		if (it._node)
 		{
-			_erase_node(_node);
+			erase_node(it._node);
 			return (1);
 		}
 		return (0);
@@ -728,20 +730,55 @@ public:
 
 	iterator find( const value_type& key )
 	{
-		return iterator(find_node(key), _root);
+		iterator p = lower_bound(key);
+		if (p != end() && !_comp(key, *p))
+			return (p);
+		return (end());
 	}
 	const_iterator find( const value_type& key ) const
 	{
-		return const_iterator(find_node(key), _root);
+		const_iterator p = lower_bound(key);
+		if (p != end() && !_comp(key, *p))
+			return (p);
+		return (end());
 	}
-
 	ft::pair<iterator,iterator> equal_range( const value_type& key )
 	{
-		return (ft::make_pair(this->lower_bound(key), this->upper_bound(key)));
+		typedef ft::pair<iterator, iterator> pp;
+		node* res = NULL;
+		node* rt = _root;
+		while (rt != NULL)
+		{
+			if (_comp(key, rt->data))
+			{
+				res = rt;
+				rt = rt->left;
+			}
+			else if (_comp(rt->data, key))
+				rt = rt->right;
+			else
+				return (pp(iterator(rt, _root), iterator(rt->right != NULL ? tree_min(rt->right) : res, _root)));
+		}
+		return (pp(iterator(res, _root), iterator(res, _root)));
 	}
 	ft::pair<const_iterator,const_iterator> equal_range( const value_type& key ) const
 	{
-		return (ft::make_pair(this->lower_bound(key), this->upper_bound(key)));
+		typedef ft::pair<iterator, iterator> pp;
+		node* res = NULL;
+		node* rt = _root;
+		while (rt != NULL)
+		{
+			if (_comp(key, rt->data))
+			{
+				res = rt;
+				rt = rt->left;
+			}
+			else if (_comp(rt->data, key))
+				rt = rt->right;
+			else
+				return (pp(iterator(rt, _root), iterator(rt->right != NULL ? tree_min(rt->right) : res, _root)));
+		}
+		return (pp(iterator(res, _root), iterator(res, _root)));
 	}
 
 	iterator lower_bound( const value_type& key )
@@ -749,14 +786,9 @@ public:
 		node *curr = _root;
 		node *res = NULL;
 
-		while (curr)
+		while (curr != NULL)
 		{
-			if (_comp(key, curr->data))
-			{
-				res = curr;
-				curr = curr->left;
-			} 
-			else if (!_comp(curr->data, key))
+			if (!_comp(curr->data, key))
 			{
 				res = curr;
 				curr = curr->left;
@@ -771,14 +803,9 @@ public:
 		node *curr = _root;
 		node *res = NULL;
 
-		while (curr)
+		while (curr != NULL)
 		{
-			if (_comp(key, curr->data))
-			{
-				res = curr;
-				curr = curr->left;
-			} 
-			else if (!_comp(curr->value, key)) 
+			if (!_comp(curr->data, key))
 			{
 				res = curr;
 				curr = curr->left;
@@ -794,7 +821,7 @@ public:
 		node *curr = _root;
 		node *res = NULL;
 
-		while (curr)
+		while (curr != NULL)
 		{
 			if (_comp(key, curr->data))
 			{
@@ -811,7 +838,7 @@ public:
 		node *curr = _root;
 		node *res = NULL;
 
-		while (curr)
+		while (curr != NULL)
 		{
 			if (_comp(key, curr->value))
 			{
@@ -832,10 +859,22 @@ public:
 
 	void clear()
 	{
-		_clear_tree(_root);
+		clear_tree(_root);
 		_root = NULL;
 	}
 private:
+	node* tree_min(node* x)
+	{
+		while (x->left != NULL)
+			x = x->left;
+		return (x);
+	}
+	node* tree_max(node* x)
+	{
+		while (x->right != NULL)
+			x = x->right;
+		return (x);
+	}
 	template<class L>
 	void	swaper(L & a, L & b)
 	{
@@ -851,7 +890,7 @@ private:
 		return tmp;
 	}
 
-	void	_remove_node(node	*n)
+	void	delete_node(node	*n)
 	{
 		_alloc_node.destroy(n);
 		_alloc_node.deallocate(n, 1);
@@ -880,7 +919,7 @@ private:
 		}
 		return NULL;
 	}
-	ft::pair<node*, bool>	_insert_to_tree(node **tree, const T & key)
+	ft::pair<node*, bool>	insert_node(node **tree, const T & key)
 	{
 		node	*parent = *tree == NULL ? NULL : (*tree)->parent;
 		while (*tree != NULL)
@@ -899,10 +938,10 @@ private:
 				return ft::make_pair(*tree, false);
 		}
 		*tree = new_node(key, parent);
-		_fix_node_after_inserting(*tree);
+		insert_fix(*tree);
 		return ft::make_pair(*tree, true);
 	}
-	void	_fix_node_after_inserting(node *n)
+	void	insert_fix(node *n)
 	{
 		while (_is_red(n->parent))
 		{
@@ -946,21 +985,21 @@ private:
 		_root->is_red = false;
 	}
 
-	void	_copy_tree(node *&current, node *curr_parent, node *other_node)
+	void	copy_tree(node *&current, node *curr_parent, node *other_node)
 	{
 		if (other_node == NULL)
 			return ;
 		current = new_node(other_node->data, curr_parent);
-		_copy_tree(current->left, current, other_node->left);
-		_copy_tree(current->right, current, other_node->right);
+		copy_tree(current->left, current, other_node->left);
+		copy_tree(current->right, current, other_node->right);
 	}
-	void	_clear_tree(node *current)
+	void	clear_tree(node *current)
 	{
 		if (current == NULL)
 			return ;
-		_clear_tree(current->left);
-		_clear_tree(current->right);
-		_remove_node(current);
+		clear_tree(current->left);
+		clear_tree(current->right);
+		delete_node(current);
 	}
 
 	void	_swap_nodes(node *nd1, node *nd2)
@@ -998,7 +1037,7 @@ private:
 			_root = nd1;
 		swaper(nd1->parent, nd2->parent);
 	}
-	void	_erase_node(node *n)
+	void	erase_node(node *n)
 	{
 		node	*to_del = n;
 
@@ -1008,7 +1047,7 @@ private:
 			while (to_del->left)
 				to_del = to_del->left;
 			_swap_nodes(n, to_del);
-			_erase_node(n);
+			erase_node(n);
 		}
 		else if (n->left)
 		{
@@ -1023,7 +1062,7 @@ private:
 			}
 			else
 				_root = n->left;
-			_remove_node(to_del);
+			delete_node(to_del);
 			return ;
 		}
 		else if (n->right)
@@ -1039,7 +1078,7 @@ private:
 			}
 			else
 				_root = n->right;
-			_remove_node(to_del);
+			delete_node(to_del);
 			return ;
 		}
 		else
@@ -1051,7 +1090,7 @@ private:
 					tmp = &n->parent->right;
 				else
 					tmp = &n->parent->left;
-				_remove_node(*tmp);
+				delete_node(*tmp);
 				*tmp = NULL;
 			}
 			else
@@ -1067,13 +1106,13 @@ private:
 				}
 				else
 					tmp = &_root;
-				_remove_node(*tmp);
+				delete_node(*tmp);
 				*tmp = NULL;
-				_fix_node_after_erasing(tmp, parent);
+				erase_fix(tmp, parent);
 			}
 		}
 	}
-	void	_fix_node_after_erasing(node **removed, node *parent)
+	void	erase_fix(node **removed, node *parent)
 	{
 		while (parent != NULL)
 		{
