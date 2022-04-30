@@ -4,7 +4,7 @@
 #include <iostream>
 
 namespace ft {
-    // enum COLOR{BLACK, RED};
+    enum COLOR{BLACK, RED};
 
     // template<class T>
 	// struct node_tree {
@@ -39,10 +39,11 @@ namespace ft {
         node_tree*	parent;
         node_tree*  left;
         node_tree*	right;
-        bool		is_red;
+        COLOR       color;
+        // bool		is_red;
         
-        explicit node_tree(const data_type& d = nullptr) : data(d), parent(nullptr), left(nullptr), right(nullptr), is_red(true) {}
-        node_tree(const data_type& d, node_tree* par, node_tree* lft, node_tree* rght, bool color) : data(d), parent(par), left(lft), right(rght), is_red(color) {}
+        explicit node_tree(const data_type& d = nullptr) : data(d), parent(nullptr), left(nullptr), right(nullptr), color(RED) {}
+        node_tree(const data_type& d, node_tree* par, node_tree* lft, node_tree* rght, COLOR col) : data(d), parent(par), left(lft), right(rght), color(col) {}
         // node_tree(const node_tree& nt)
         // {
         // 	*this = nt;
@@ -247,6 +248,7 @@ namespace ft {
     {
         return (pair<T1,T2>(x, y));
     }
+
     
 }
 

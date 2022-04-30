@@ -40,7 +40,7 @@ public:
 	typedef typename Allocator::const_pointer	const_pointer;
 	
 	typedef tree_iterator<ft::pair<const Key, T> >			iterator;
-	typedef RBTreeConstIterator<ft::pair<const Key, T> >	const_iterator;
+	typedef tree_const_iterator<ft::pair<const Key, T> >	const_iterator;
 	typedef ft::reverse_iterator<iterator>					reverse_iterator;
 	typedef ft::reverse_iterator<const_iterator>			const_reverse_iterator;
 
