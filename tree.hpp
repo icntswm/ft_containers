@@ -118,7 +118,8 @@ public:
 	{
 		return const_reverse_iterator(begin());
 	}
-	ft::pair<iterator,bool> insert (const value_type& val)
+	
+	ft::pair<iterator,bool> insert (const value_type& val)//----------------------------------------------------------------------------------------
 	{
 		ft::pair<node *, bool>	tmp = insert_node(&_root, val);
 		return ft::make_pair(iterator(tmp.first, _root), tmp.second);
@@ -139,22 +140,21 @@ public:
 
 	void erase( iterator pos )
 	{
-		erase_node(pos._node);
+		erase_delete(pos._node);
 	}
-	void erase( iterator first, iterator last )
+	void erase(iterator first, iterator last)
 	{
-		for (; first != last;)
-			erase_node((first++)._node);
+		while (first != last) {
+			erase_delete((first++)._node);
+		}
 	}
 	size_type erase( const value_type& key )
 	{
 		iterator it = find(key);
-		if (it._node)
-		{
-			erase_node(it._node);
-			return (1);
-		}
-		return (0);
+		if (!it._node)
+			return (0);
+		erase_delete(it._node);
+		return (1);
 	}
 
 	iterator find( const value_type& key )
@@ -171,7 +171,7 @@ public:
 			return (p);
 		return (end());
 	}
-	ft::pair<iterator,iterator> equal_range( const value_type& key )
+	ft::pair<iterator, iterator> equal_range( const value_type& key )
 	{
 		typedef ft::pair<iterator, iterator> pp;
 		node* res = nullptr;
@@ -282,8 +282,13 @@ public:
 
 	void	swap(RBTree& other)
 	{
-		swaper(_root, other._root);
-		swaper(_size, other._size);
+		node* tmp_root = _root;
+		_root = other._root;
+		other._root = tmp_root;
+
+		size_type tmp_size = _size;
+		_size = other._size;
+		other._size = tmp_size;
 	}
 
 	void clear()
@@ -304,38 +309,23 @@ private:
 			x = x->right;
 		return (x);
 	}
-	template<class L>
-	void	swaper(L & a, L & b)
-	{
-		L tmp = a;
-		a = b;
-		b = tmp;
-	}
 	node*	new_node(const T& data, node *parent = nullptr, node *left = nullptr, node *right = nullptr, COLOR col = RED)
 	{
-		node	* tmp = _alloc_node.allocate(1);
+		node*	tmp = _alloc_node.allocate(1);
 		_alloc_node.construct(tmp, node(data, parent, left, right, col));
-		_size++;
+		++_size;
 		return tmp;
 	}
 
-	void	delete_node(node	*n)
+	void	delete_node(node *n)
 	{
 		_alloc_node.destroy(n);
 		_alloc_node.deallocate(n, 1);
-		_size--;
+		--_size;
 	}
-
-	COLOR	is_color(node *n)
+	node* find_node(const value_type& key) const
 	{
-		if (n == nullptr)
-			return (BLACK);
-		return (n->color);
-	}
-
-	node *	find_node(const T & key) const
-	{
-		node	* tmp = _root;
+		node* tmp = _root;
 
 		while (tmp != nullptr)
 		{
@@ -348,7 +338,48 @@ private:
 		}
 		return nullptr;
 	}
-	ft::pair<node*, bool>	insert_node(node **tree, const T & key)
+	void	copy_tree(node *&current, node *curr_parent, node *other_node)
+	{
+		if (other_node == nullptr)
+			return ;
+		current = new_node(other_node->data, curr_parent);
+		copy_tree(current->left, current, other_node->left);
+		copy_tree(current->right, current, other_node->right);
+	}
+	void	clear_tree(node *current)
+	{
+		if (current == nullptr)
+			return ;
+		clear_tree(current->left);
+		clear_tree(current->right);
+		delete_node(current);
+	}
+	node* tree_next(node* n)
+	{
+		if (n->right != nullptr)
+			return (tree_min(n->right));
+		while (n != n->parent->left)
+			n = n->parent;
+		n = n->parent;
+		return (n);
+	}
+	// ft::pair<iterator, bool> emplace_unique_key_args(node *r, const value_type& key) {
+	// 	node* parent;
+
+	// 	node* child = 
+	// }
+
+
+
+
+
+
+
+
+
+
+
+	ft::pair<node*, bool>	insert_node(node **tree, const value_type& key)
 	{
 		node	*parent = *tree == nullptr ? nullptr : (*tree)->parent;
 		while (*tree != nullptr)
@@ -370,6 +401,43 @@ private:
 		insert_fix(*tree);
 		return ft::make_pair(*tree, true);
 	}
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
 	void	insert_fix(node *n)
 	{
 		if (n == _root)
@@ -439,264 +507,159 @@ private:
 		}
 	}
 
-	void	copy_tree(node *&current, node *curr_parent, node *other_node)
-	{
-		if (other_node == nullptr)
-			return ;
-		current = new_node(other_node->data, curr_parent);
-		copy_tree(current->left, current, other_node->left);
-		copy_tree(current->right, current, other_node->right);
-	}
-	void	clear_tree(node *current)
-	{
-		if (current == nullptr)
-			return ;
-		clear_tree(current->left);
-		clear_tree(current->right);
-		delete_node(current);
-	}
 
-	void	node_swap(node *nd1, node *nd2)
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+	void	erase_delete(node* n)
 	{
-		swaper(nd1->color, nd2->color);
-		if (nd1->left)
-			nd1->left->parent = nd2;
-		if (nd2->left)
-			nd2->left->parent = nd1;
-		swaper(nd1->left, nd2->left);
+		node*	y = (n->left == nullptr || n->right == nullptr) ? n : tree_next(n);
+		node*	x = y->left != nullptr ? y->left : y->right;
+		node*	w = nullptr;
 
-		if (nd1->right)
-			nd1->right->parent = nd2;
-		if (nd2->right)
-			nd2->right->parent = nd1;
-		swaper(nd1->right, nd2->right);
-
-		if (nd1->parent)
-		{
-			if (nd1->parent->left == nd1)
-				nd1->parent->left = nd2;
-			else
-				nd1->parent->right = nd2;
+		if (x != nullptr)
+			x->parent = y->parent;
+		if (!y->parent) {
+			_root = n->right;
+			delete_node(n);
 		}
-		else
-			_root = nd2;
-		if (nd2->parent)
-		{
-			if (nd2->parent->left == nd2)
-				nd2->parent->left = nd1;
+		else if (y->parent && y == y->parent->left) {
+			y->parent->left = x;
+			if (y != _root)
+				w = y->parent->right;
 			else
-				nd2->parent->right = nd1;
+				_root = x;
+			delete_node(n);
 		}
-		else
-			_root = nd1;
-		swaper(nd1->parent, nd2->parent);
-	}
-	void	erase_node(node *n)
-	{
-		// node	*to_del = n;
-
-		// if (n->left and n->right)
-		// {
-		// 	to_del = n->right;
-		// 	while (to_del->left)
-		// 		to_del = to_del->left;
-		// 	node_swap(n, to_del);
-		// 	erase_node(n);
-		// }
-		// else if (n->left)
-		// {
-		// 	n->left->color = BLACK;
-		// 	n->left->parent = n->parent;
-		// 	if (n->parent)
-		// 	{
-		// 		if (n->parent->left == n)
-		// 			n->parent->left = n->left;
-		// 		else
-		// 			n->parent->right = n->left;
-		// 	}
-		// 	else
-		// 		_root = n->left;
-		// 	delete_node(to_del);
-		// 	return ;
-		// }
-		// else if (n->right)
-		// {
-		// 	n->right->color = BLACK;
-		// 	n->right->parent = n->parent;
-		// 	if (n->parent)
-		// 	{
-		// 		if (n->parent->right == n)
-		// 			n->parent->right = n->right;
-		// 		else
-		// 			n->parent->left = n->right;
-		// 	}
-		// 	else
-		// 		_root = n->right;
-		// 	delete_node(to_del);
-		// 	return ;
-		// }
-		// else
-		// {
-		// 	if (n->color == RED)
-		// 	{
-		// 		node	**tmp;
-		// 		if (n->parent->right == n)
-		// 			tmp = &n->parent->right;
-		// 		else
-		// 			tmp = &n->parent->left;
-		// 		delete_node(*tmp);
-		// 		*tmp = nullptr;
-		// 	}
-		// 	else
-		// 	{
-		// 		node	**tmp;
-		// 		node    *parent = n->parent;
-		// 		if (n->parent)
-		// 		{
-		// 			if (n->parent->right == n)
-		// 				tmp = &n->parent->right;
-		// 			else
-		// 				tmp = &n->parent->left;
-		// 		}
-		// 		else
-		// 			tmp = &_root;
-		// 		delete_node(*tmp);
-		// 		*tmp = nullptr;
-		// 		erase_fix(tmp, parent);
-		// 	}
-		// }
-	}
-	void	erase_fix(node **removed, node *parent)
-	{
-		while (parent != nullptr)
+		else if (y->parent && y != y->parent->left)
 		{
-			if (&parent->right == removed) 
+			y->parent->right = x;
+			w = y->parent->left;
+			delete_node(n);
+		}
+		COLOR remove_black = y->color;
+		if (y != n) {
+			y->parent = n->parent;
+			if (n->parent && n == n->parent->left)
+				y->parent->left = y;
+			else
+				y->parent->right = y;
+			y->left = n->left;
+			y->left->parent = y;
+			y->right = n->right;
+			if (y->right != nullptr)
+				y->right->parent = y;
+			y->color = n->color;
+			if (_root == n)
+				_root = y;
+		}
+		if (remove_black == BLACK && _root != nullptr)
+			erase_fix(x, w);
+	}
+	void	erase_fix(node *x, node *w)
+	{
+		if (x != nullptr)
+			x->color = BLACK;
+		else
+		{
+			while (true)
 			{
-				if (is_color(parent) == RED) 
+				if (w != w->parent->left)
 				{
-					if (is_color(parent->left->right) == RED) 
+					if (w->color == RED)
 					{
-						parent->color = BLACK;
-						tree_left_rotate(parent->left);
+						w->color = BLACK;
+						w->parent->color = RED;
+						tree_left_rotate(w->parent);
+						if (_root == w->left)
+							_root = w;
+						w = w->left->right;
 					}
-					tree_right_rotate(parent);
-					return ;
-				}
-				else 
-				{
-					if (is_color(parent->left) == RED) 
+					if ((w->left == nullptr || w->left->color == BLACK) && (w->right == nullptr || w->right->color == BLACK))
 					{
-						if (is_color(parent->left->right->left) == RED)
+						w->color = RED;
+						x = w->parent;
+						if (x == _root || x->color == RED)
 						{
-							parent->left->right->left->color = BLACK;
-							tree_left_rotate(parent->left);
-							tree_right_rotate(parent);
+							x->color = BLACK;
+							break ;
 						}
-						else if (is_color(parent->left->right->right) == RED)
-						{
-							swaper(parent->left->right->color, parent->left->right->right->color);
-							tree_left_rotate(parent->left->right);
-							parent->left->right->left->color = BLACK;
-							tree_left_rotate(parent->left);
-							tree_right_rotate(parent);
-						}
+						if (x == x->parent->left)
+							w = x->parent->right;
 						else
-						{
-							parent->left->color = BLACK;
-							parent->left->right->color = RED;
-							tree_right_rotate(parent);
-						}
-						return;
+							w = x->parent->left;
 					}
-					else 
+					else
 					{
-						if (is_color(parent->left->right) == RED)
+						if (w->right == nullptr || w->right->color == BLACK)
 						{
-							parent->left->right->color = BLACK;
-							tree_left_rotate(parent->left);
-							tree_right_rotate(parent);
-							return ;
+							w->left->color = BLACK;
+							w->color = RED;
+							tree_right_rotate(w);
+							w = w->parent;
 						}
-						else if (is_color(parent->left->left) == RED)
-						{
-							parent->left->left->color = BLACK;
-							tree_right_rotate(parent);
-							return ;
-						}
-						parent->left->color = RED;
-						if (parent->parent)
-						{
-							if (parent->parent->left == parent)
-								removed = &parent->parent->left;
-							else
-								removed = &parent->parent->right;
-						}
-						parent = parent->parent;
+						w->color = w->parent->color;
+						w->parent->color = BLACK;
+						w->right->color = BLACK;
+						tree_left_rotate(w->parent);
+						break;
 					}
 				}
-			}
-			else 
-			{
-				if (is_color(parent) == RED)
+				else
 				{
-					if (is_color(parent->right->left) == RED)
+					if (w->color == RED)
 					{
-						parent->color = BLACK;
-						tree_right_rotate(parent->right);
+						w->color = BLACK;
+						w->parent->color = RED;
+						tree_right_rotate(w->parent);
+						if (_root == w->right)
+							_root = w;
+						w = w->right->left;
 					}
-					tree_left_rotate(parent);
-					return ;
-				}
-				else 
-				{
-					if (is_color(parent->right) == RED) 
+					if ((w->left == nullptr || w->left->color == BLACK) && (w->right == nullptr || w->right->color == BLACK))
 					{
-						if (is_color(parent->right->left->right) == RED)
+						w->color = RED;
+						x = w->parent;
+						if (x->color == RED || x == _root)
 						{
-							parent->right->left->right->color = BLACK;
-							tree_right_rotate(parent->right);
-							tree_left_rotate(parent);
+							x->color = BLACK;
+							break;
 						}
-						else if (is_color(parent->right->left->left) == RED)
-						{
-							swaper(parent->right->left->color, parent->right->left->left->color);
-							tree_right_rotate(parent->right->left);
-							parent->right->left->right->color = BLACK;
-							tree_right_rotate(parent->right);
-							tree_left_rotate(parent);
-						}
+						if (x == x->parent->left)
+							w = x->parent->right;
 						else
-						{
-							parent->right->color = BLACK;
-							parent->right->left->color = RED;
-							tree_left_rotate(parent);
-						}
-						return;
+							w = x->parent->left;
 					}
-					else 
+					else
 					{
-						if (is_color(parent->right->left) == RED)
+						if (w->left == nullptr || w->left->color == BLACK)
 						{
-							parent->right->left->color = BLACK;
-							tree_right_rotate(parent->right);
-							tree_left_rotate(parent);
-							return ;
+							w->right->color = BLACK;
+							w->color = RED;
+							tree_left_rotate(w);
+							w = w->parent;
 						}
-						else if (is_color(parent->right->right) == RED)
-						{
-							parent->right->right->color = BLACK;
-							tree_left_rotate(parent);
-							return ;
-						}
-						parent->right->color = RED;
-						if (parent->parent)
-						{
-							if (parent->parent->right == parent)
-								removed = &parent->parent->right;
-							else
-								removed = &parent->parent->left;
-						}
-						parent = parent->parent;
+						w->color = w->parent->color;
+						w->parent->color = BLACK;
+						w->left->color = BLACK;
+						tree_right_rotate(w->parent);
+						break;
 					}
 				}
 			}
