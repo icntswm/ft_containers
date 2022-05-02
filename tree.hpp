@@ -8,15 +8,15 @@
 
 namespace ft
 {
-template <class T, class Compare = std::less<T>, class Allocator = std::allocator<T> >
+template <class Key, class T, class Compare = std::less<T>, class Allocator = std::allocator<T> >
 class RBTree
 {
 public:
-	typedef	T						value_type;
+	typedef	ft::pair<const Key, T>	value_type;
 	typedef std::size_t				size_type;
 	typedef Compare					comparator_type;
 	typedef Allocator				allocator_type;
-	typedef node_tree<T>			node;
+	typedef node_tree<value_type>			node;
 	typedef typename allocator_type::template rebind<node>::other	node_allocator;
 	typedef ft::tree_iterator<value_type>		iterator;
 	typedef ft::tree_const_iterator<value_type>	const_iterator;
@@ -30,7 +30,7 @@ private:
 	comparator_type	_comp;
 	node *			_root;
 public:
-	RBTree() : _size(0), _alloc_value(), _alloc_node(), _comp(), _root(nullptr){}
+	RBTree() : _size(0), _alloc_value(), _alloc_node(), _comp(comparator_type()), _root(nullptr){}
 
 	explicit RBTree( const Compare& comp, const Allocator& alloc = Allocator() )
 			: _size(0), _alloc_value(alloc), _alloc_node(node_allocator()), _comp(comp), _root(nullptr) {}
@@ -58,13 +58,13 @@ public:
 	}
 
 	allocator_type get_allocator() const { return _alloc_value; }
-
 	bool		empty() const{ return _root == nullptr; }
-
 	size_type	size() const { return _size; }
-
 	size_type	max_size() const { return (_alloc_node.max_size()); }
-
+	
+	
+	
+	
 	iterator		begin()
 	{
 		node    *tmp = _root;
@@ -76,7 +76,6 @@ public:
 		}
 		return (iterator(tmp, _root));
 	}
-
 	const_iterator	begin() const
 	{
 		node    *tmp = _root;
@@ -88,55 +87,68 @@ public:
 		}
 		return const_iterator(tmp, _root);
 	}
-
 	iterator		end()
 	{
 		return iterator(nullptr, _root);
 	}
-
 	const_iterator	end() const
 	{
 		return const_iterator(nullptr, _root);
 	}
-
 	reverse_iterator		rbegin()
 	{
 		return reverse_iterator(end());
 	}
-	
 	const_reverse_iterator	rbegin() const
 	{
 		return const_reverse_iterator(end());
 	}
-	
 	reverse_iterator		rend()
 	{
 		return reverse_iterator(begin());
 	}
-	
 	const_reverse_iterator	rend() const
 	{
 		return const_reverse_iterator(begin());
 	}
 	
+
+
+
+
+
+
+
+
+
+
 	ft::pair<iterator,bool> insert (const value_type& val)//----------------------------------------------------------------------------------------
 	{
 		ft::pair<node *, bool>	tmp = insert_node(&_root, val);
 		return ft::make_pair(iterator(tmp.first, _root), tmp.second);
 	}
-
 	iterator insert( iterator hint, const value_type& value )
 	{
 		ft::pair<node *, bool>	tmp = insert_node(&_root, value);
 		return iterator(tmp.first, _root);
 	}
-
 	template< class InputIt >
 	void insert( InputIt first, InputIt last )
 	{
 		for (InputIt it = first; it != last; ++it)
 			insert(*it);
 	}
+
+
+
+
+
+
+
+
+
+
+
 
 	void erase( iterator pos )
 	{
@@ -157,6 +169,12 @@ public:
 		return (1);
 	}
 
+
+
+
+
+
+
 	iterator find( const value_type& key )
 	{
 		iterator p = lower_bound(key);
@@ -171,6 +189,16 @@ public:
 			return (p);
 		return (end());
 	}
+
+
+
+
+
+
+
+
+
+
 	ft::pair<iterator, iterator> equal_range( const value_type& key )
 	{
 		typedef ft::pair<iterator, iterator> pp;
@@ -210,6 +238,15 @@ public:
 		return (pp(iterator(res, _root), iterator(res, _root)));
 	}
 
+
+
+
+
+
+
+
+
+
 	iterator lower_bound( const value_type& key )
 	{
 		node *curr = _root;
@@ -244,6 +281,14 @@ public:
 		}
 		return const_iterator(res, _root);
 	}
+
+
+
+
+
+
+
+
 
 	iterator upper_bound( const value_type& key )
 	{
@@ -280,6 +325,13 @@ public:
 		return const_iterator(res, _root);
 	}
 
+
+
+
+
+
+
+
 	void	swap(RBTree& other)
 	{
 		node* tmp_root = _root;
@@ -290,12 +342,14 @@ public:
 		_size = other._size;
 		other._size = tmp_size;
 	}
-
 	void clear()
 	{
 		clear_tree(_root);
-		_root = nullptr;
 	}
+
+
+
+
 private:
 	node* tree_min(node* x)
 	{
@@ -309,7 +363,7 @@ private:
 			x = x->right;
 		return (x);
 	}
-	node*	new_node(const T& data, node *parent = nullptr, node *left = nullptr, node *right = nullptr, COLOR col = RED)
+	node*	new_node(const value_type& data, node *parent = nullptr, node *left = nullptr, node *right = nullptr, COLOR col = RED)
 	{
 		node*	tmp = _alloc_node.allocate(1);
 		_alloc_node.construct(tmp, node(data, parent, left, right, col));
@@ -348,8 +402,10 @@ private:
 	}
 	void	clear_tree(node *current)
 	{
-		if (current == nullptr)
+		if (current == nullptr) {
+			_root = nullptr;
 			return ;
+		}
 		clear_tree(current->left);
 		clear_tree(current->right);
 		delete_node(current);
@@ -363,22 +419,6 @@ private:
 		n = n->parent;
 		return (n);
 	}
-	// ft::pair<iterator, bool> emplace_unique_key_args(node *r, const value_type& key) {
-	// 	node* parent;
-
-	// 	node* child = 
-	// }
-
-
-
-
-
-
-
-
-
-
-
 	ft::pair<node*, bool>	insert_node(node **tree, const value_type& key)
 	{
 		node	*parent = *tree == nullptr ? nullptr : (*tree)->parent;
@@ -401,43 +441,6 @@ private:
 		insert_fix(*tree);
 		return ft::make_pair(*tree, true);
 	}
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
 	void	insert_fix(node *n)
 	{
 		if (n == _root)
@@ -506,27 +509,6 @@ private:
 			}
 		}
 	}
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
 	void	erase_delete(node* n)
 	{
 		node*	y = (n->left == nullptr || n->right == nullptr) ? n : tree_next(n);
