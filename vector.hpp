@@ -1,11 +1,9 @@
 #ifndef VECTOR_HPP
 # define VECTOR_HPP
 
-#include "utility.hpp"
-#include "iterator.hpp"
-#include "reverse_iterator.hpp"
-#include <limits>
-#include <iostream>
+# include "utility.hpp"
+# include "vector_iterator.hpp"
+# include "reverse_iterator.hpp"
 
 namespace ft {
     template<class T,class Allocator = std::allocator<T> >
@@ -19,8 +17,8 @@ namespace ft {
             typedef const T&									const_reference;
             typedef T*											pointer;
             typedef const T*									const_pointer;
-            typedef class ft::iterator<pointer>					iterator;
-            typedef class ft::iterator<const_pointer>			const_iterator;
+            typedef class ft::vector_iterator<pointer>			iterator;
+            typedef class ft::vector_iterator<const_pointer>	const_iterator;
             typedef class ft::reverse_iterator<iterator>		reverse_iterator;
             typedef class ft::reverse_iterator<const_iterator>	const_reverse_iterator;
         private:
@@ -122,14 +120,14 @@ namespace ft {
 			//AT ---------------------------------------------------------------------------------------------------
 			reference at(size_type pos)
 			{
-				if (pos > _size - 1)
-					throw std::invalid_argument("vector error: at");
+				if (pos >= _size)
+					throw std::out_of_range("vector error: at");
 				return (_ptr[pos]);
 			}
 			const_reference at(size_type pos) const
 			{
-				if (pos > _size - 1)
-					throw std::invalid_argument("vector error: at");
+				if (pos >= _size)
+					throw std::out_of_range("vector error: at");
 				return (_ptr[pos]);
 			}
 			//OPERATOR[] ---------------------------------------------------------------------------------------------------
@@ -317,9 +315,6 @@ namespace ft {
 					reserve(1);
 				else if (_size == _capacity)
 					reserve(_capacity * 2);
-				// std::cout << "counter: " << counter << "\n";
-				// std::cout << "size: " << _size <<  "\n";
-				// std::cout << "capacity: " << _capacity << "\n";
 				size_type j = 0;
 				if (_size > 0) {
 					for (size_type i = 0; i < _size; i++) {
