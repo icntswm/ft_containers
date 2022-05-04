@@ -6,32 +6,6 @@
 namespace ft {
     enum COLOR{BLACK, RED};
 
-    // template<class T>
-	// struct node_tree {
-	// 	typedef T	data_type;
-	// 	data_type   data;
-	// 	node_tree*	parent;
-	// 	node_tree*  left;
-	// 	node_tree*	right;
-	// 	COLOR       color;
-		
-	// 	explicit node_tree(data_type& d = nullptr) : data(d), parent(nullptr), left(nullptr), right(nullptr), color(RED) {}
-	// 	node_tree(const node_tree& nt)
-	// 	{
-	// 		*this = nt;
-	// 	}
-	// 	node_tree& operator=(const node_tree& nt) {
-	// 		data = nt.data;
-	// 		right = nt.right;
-	// 		left = nt.left;
-	// 		parent = nt.parent;
-	// 		color = nt.color;
-	// 		return (*this);
-	// 	}
-	// };
-
-
-
     template<class T>
     struct node_tree {
         typedef T	data_type;
@@ -40,7 +14,6 @@ namespace ft {
         node_tree*  left;
         node_tree*	right;
         COLOR       color;
-        // bool		is_red;
         
         explicit node_tree(const data_type& d = nullptr) : data(d), parent(nullptr), left(nullptr), right(nullptr), color(RED) {}
         node_tree(const data_type& d, node_tree* par, node_tree* lft, node_tree* rght, COLOR col) : data(d), parent(par), left(lft), right(rght), color(col) {}
@@ -53,7 +26,7 @@ namespace ft {
         // 	right = nt.right;
         // 	left = nt.left;
         // 	parent = nt.parent;
-        // 	is_red = nt.is_red;
+        // 	color = nt.color;
         // 	return (*this);
         // }
     };
@@ -86,7 +59,6 @@ namespace ft {
             typedef std::random_access_iterator_tag    iterator_category;
     };
 
-
     template<bool Cond, class T = void>
     struct enable_if {};
     template<class T>
@@ -94,7 +66,6 @@ namespace ft {
     { 
         typedef T type;
     };
-
 
     template <class T, bool v>
     struct integral_constant {
@@ -138,7 +109,6 @@ namespace ft {
     template <>
     struct is_integral<unsigned long long int> : public integral_constant <bool, true> {};
 
-
     template<class InputIt1, class InputIt2>
     bool equal(InputIt1 first1, InputIt1 last1, InputIt2 first2)
     {
@@ -181,7 +151,6 @@ namespace ft {
         return ((first1 == last1) && (first2 != last2));
     }
 
-
     template <class T1, class T2>
     struct pair {
         typedef T1 first_type;
@@ -193,16 +162,13 @@ namespace ft {
         template<class U, class V>
         pair (const pair<U, V>& pr) : first(pr.first), second(pr.second) {}
         pair (const first_type& a, const second_type& b) : first(a), second(b) {}
-        // pair(const pair& p) : first(p.first), second(p.second) {} //?????????????????
 
-        // pair& operator= (const pair& pr)
-        // {
-        //     if (this != &pr) {
-        //         first = pr.first;
-        //         second = pr.second;
-        //     }
-        //     return (*this);
-        // }
+        pair& operator= (const pair& pr)
+        {
+            first = pr.first;
+            second = pr.second;
+            return (*this);
+        }
     };
 
 

@@ -12,7 +12,7 @@ namespace ft {
 			typedef typename Container::size_type		size_type;
 			typedef typename Container::reference		reference;
 			typedef typename Container::const_reference	const_reference;
-		private:
+		protected:
 			container_type	_c;
 		public:
 			//CONSTRUCTOR ---------------------------------------------------------------------------------------------------

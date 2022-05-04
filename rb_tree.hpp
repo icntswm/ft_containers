@@ -12,6 +12,7 @@ namespace ft
 		public:
 			typedef	ft::pair<const Key, T>									value_type;
 			typedef std::size_t												size_type;
+			typedef std::ptrdiff_t											difference_type;
 			typedef Compare													compare_type;
 			typedef Allocator												allocator_type;
 			typedef node_tree<value_type>									node;
@@ -30,7 +31,7 @@ namespace ft
 			//CONSTRUCTOR ------------------------------------------------------------------------
 			rb_tree() : _size(0), _alloc_value(allocator_type()), _alloc_node(node_allocator()), _comp(compare_type()), _root(nullptr){}
 			explicit rb_tree(const compare_type& comp, const allocator_type& alloc = allocator_type()) : _size(0), _alloc_value(alloc), _alloc_node(node_allocator()), _comp(comp), _root(nullptr) {}
-			rb_tree(const rb_tree& other) : _alloc_value(other._alloc_value), _alloc_node(other._alloc_node), _comp(other._comp), _root(nullptr)
+			rb_tree(const rb_tree& other) : _size(0), _alloc_value(other._alloc_value), _alloc_node(other._alloc_node), _comp(other._comp), _root(nullptr)
 			{
 				copy_tree(&_root, nullptr, other._root);
 				_size = other._size;
@@ -69,7 +70,7 @@ namespace ft
 			//MAX_SIZE ------------------------------------------------------------------------
 			size_type max_size() const
 			{
-				return (std::numeric_limits<std::ptrdiff_t>::max() / sizeof(std::ptrdiff_t));
+				return (std::numeric_limits<difference_type>::max() / sizeof(difference_type));
 			}
 			//CLEAR ------------------------------------------------------------------------
 			void clear()
@@ -90,6 +91,7 @@ namespace ft
 			template<class InputIt>
 			void insert(InputIt first, InputIt last)
 			{
+
 				for (InputIt it = first; it != last; ++it)
 					insert(*it);
 			}
@@ -230,6 +232,7 @@ namespace ft
 				typedef ft::pair<iterator, iterator> pp;
 				node* res = nullptr;
 				node* rt = _root;
+
 				while (rt != nullptr)
 				{
 					if (_comp(key, rt->data))
@@ -249,6 +252,7 @@ namespace ft
 				typedef ft::pair<iterator, iterator> pp;
 				node* res = nullptr;
 				node* rt = _root;
+
 				while (rt != nullptr)
 				{
 					if (_comp(key, rt->data))
@@ -428,7 +432,7 @@ namespace ft
 					n->color = RED;
 				while (n != _root && n->parent &&  n->parent->color == RED)
 				{
-					if (n->parent == n->parent->parent->left)
+					if (n == n->parent->left)
 					{
 						node* y = n->parent->parent->right;
 						if (y != nullptr && y->color == RED)
@@ -444,11 +448,6 @@ namespace ft
 						}
 						else
 						{
-							if (n != n->parent->left)
-							{
-								n = n->parent;
-								tree_left_rotate(n);
-							}
 							n = n->parent;
 							n->color = BLACK;
 							n = n->parent;
@@ -473,11 +472,6 @@ namespace ft
 						}
 						else
 						{
-							if (n == n->parent->left)
-							{
-								n = n->parent;
-								tree_right_rotate(n);
-							}
 							n = n->parent;
 							n->color = BLACK;
 							n = n->parent;
