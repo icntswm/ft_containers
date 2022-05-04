@@ -1,16 +1,16 @@
 #include <iostream>
 #include <string>
 #include <deque>
-// #if 1 //CREATE A REAL STL EXAMPLE
-// 	#include <map>
-// 	#include <stack>
-// 	#include <vector>
-// 	namespace ft = std;
-// #else
+#if 1 //CREATE A REAL STL EXAMPLE
+	#include <map>
+	#include <stack>
+	#include <vector>
+	namespace ft = std;
+#else
 	#include "map.hpp"
 	#include "stack.hpp"
 	#include "vector.hpp"
-// #endif
+#endif
 
 #include <stdlib.h>
 
@@ -23,13 +23,11 @@ struct Buffer
 };
 
 
-#define COUNT (MAX_RAM / (int)sizeof(Buffer))
+#define COUNT 1//(MAX_RAM / (int)sizeof(Buffer))
 
 template<typename T>
 class MutantStack : public ft::stack<T>
 {
-private:
-    ft::vector<T> c;
 public:
 	MutantStack() {}
 	MutantStack(const MutantStack<T>& src) { *this = src; }
@@ -78,9 +76,9 @@ int main(int argc, char** argv) {
 
 	try
 	{
-		for (int i = 0; i < 100; i++)
+		for (int i = 0; i < COUNT; i++)
 		{
-			const int idx = rand() % 100;
+			const int idx = rand() % COUNT;
 			vector_buffer.at(idx);
 			std::cerr << "Error: THIS VECTOR SHOULD BE EMPTY!!" <<std::endl;
 		}
@@ -89,27 +87,17 @@ int main(int argc, char** argv) {
 	{
 		//NORMAL ! :P
 	}
-	for (int i = 0; i < 1000; ++i)
+	
+	for (int i = 0; i < COUNT; ++i)
 	{
 		map_int.insert(ft::make_pair(rand(), rand()));
 	}
 
 	int sum = 0;
-	for (int i = 0; i < 100; i++)
+	for (int i = 0; i < 10000; i++)
 	{
-		try
-		{
-			int access = rand();
-			if (!map_int[access])
-				std::cout << "LOL\n";
-			else
-				std::cout << "kek\n";
-			sum += map_int[access];
-		}
-		catch(const std::exception& e)
-		{
-			std::cerr << e.what() << '\n';
-		}
+		int access = rand();
+		sum += map_int[access];
 	}
 	std::cout << "should be constant with the same seed: " << sum << std::endl;
 
