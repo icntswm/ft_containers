@@ -2,23 +2,21 @@
 # define TREE_ITERATOR_HPP
 
 #include "utility.hpp"
-#include <iostream>
-#include <limits>
 
 namespace ft {
 	template <class IteratorType>
 	class tree_const_iterator {
 		public:
-			typedef	IteratorType													iterator_type;
-			typedef std::bidirectional_iterator_tag						  			iterator_category;
-			typedef typename ft::iterator_traits<const iterator_type*>::value_type         				value_type;
-			typedef typename ft::iterator_traits<const iterator_type*>::difference_type   				 difference_type;
-			typedef typename ft::iterator_traits<const iterator_type*>::pointer          			  pointer;
-			typedef typename ft::iterator_traits<const iterator_type*>::reference       					  reference;
-			typedef	node_tree<iterator_type>	node;
-
-			const node	*_node;
-			const node	*_root;
+			typedef	IteratorType														iterator_type;
+			typedef std::bidirectional_iterator_tag										iterator_category;
+			typedef typename ft::iterator_traits<const iterator_type*>::value_type		value_type;
+			typedef typename ft::iterator_traits<const iterator_type*>::difference_type	difference_type;
+			typedef typename ft::iterator_traits<const iterator_type*>::pointer			pointer;
+			typedef typename ft::iterator_traits<const iterator_type*>::reference		reference;
+			typedef	node_tree<iterator_type>											node;
+			
+			const node*	_node;
+			const node*	_root;
 		private:
 			node* tree_min(node* x)
 			{
@@ -45,18 +43,18 @@ namespace ft {
 			}
 		public:
 			tree_const_iterator() {};
-			tree_const_iterator(node * n, node* r) : _node(n), _root(r) {}
+			tree_const_iterator(node* n, node* r) : _node(n), _root(r) {}
 			tree_const_iterator(const tree_const_iterator& it) : _node(it._node), _root(it._root) {};
 			tree_const_iterator& operator=(const tree_const_iterator& it) {
 				_node = it._node;
 				_root = it._root;
-				return *this;
+				return (*this);
 			}
 			reference operator*() const {
-				return _node->data;
+				return (_node->data);
 			}
 			pointer operator->() const {
-				return &(_node->data);
+				return (&_node->data);
 			}
 			tree_const_iterator& operator++()
 			{
@@ -82,9 +80,9 @@ namespace ft {
 				return (*this);
 			}
 			tree_const_iterator operator++(int) {
-				tree_const_iterator tmp(*this);
+				tree_const_iterator temp(*this);
 				++(*this);
-				return tmp;
+				return temp;
 			}
 			tree_const_iterator& operator--()
 			{
@@ -102,31 +100,31 @@ namespace ft {
 				return (*this);
 			}
 			tree_const_iterator	operator--(int) {
-				tree_const_iterator tmp(*this);
+				tree_const_iterator temp(*this);
 				--(*this);
-				return tmp;
+				return (temp);
 			}
 			friend bool operator==(tree_const_iterator lhs, tree_const_iterator rhs)
 			{
-				return lhs._node == rhs._node;
+				return (lhs._node == rhs._node);
 			}
 
 			friend bool operator!=(tree_const_iterator lhs, tree_const_iterator rhs)
 			{
-				return lhs._node != rhs._node;
+				return (lhs._node != rhs._node);
 			}
 	};
 	template<class IteratorType>
 	class tree_iterator {
 		public:
 			typedef	IteratorType													iterator_type;
-			typedef std::bidirectional_iterator_tag						  			iterator_category;
-			typedef typename ft::iterator_traits<iterator_type*>::value_type         				value_type;
-			typedef typename ft::iterator_traits<iterator_type*>::difference_type   				 difference_type;
-			typedef typename ft::iterator_traits<iterator_type*>::pointer          			  pointer;
-			typedef typename ft::iterator_traits<iterator_type*>::reference       					  reference;
-			typedef	node_tree<iterator_type>	node;
-
+			typedef std::bidirectional_iterator_tag									iterator_category;
+			typedef typename ft::iterator_traits<iterator_type*>::value_type		value_type;
+			typedef typename ft::iterator_traits<iterator_type*>::difference_type	difference_type;
+			typedef typename ft::iterator_traits<iterator_type*>::pointer			pointer;
+			typedef typename ft::iterator_traits<iterator_type*>::reference			reference;
+			typedef	node_tree<iterator_type>										node;
+			
 			node* _node;
 			node* _root;
 		private:
@@ -170,13 +168,13 @@ namespace ft {
 			}
 			pointer operator->()
 			{
-				return (&(_node->data));
+				return (&_node->data);
 			}
 			tree_iterator& operator++()
 			{
-				if (_node == nullptr && _root == nullptr)
+				if (!_node && !_root)
 					return (*this);
-				if (_node == nullptr)
+				if (!_node)
 					_node = tree_min(_root);
 				else
 				{
@@ -189,15 +187,15 @@ namespace ft {
 			}
 			tree_iterator operator++ (int)
 			{
-				tree_iterator tmp(*this);
+				tree_iterator temp(*this);
 				++(*this);
-				return (tmp);
+				return (temp);
 			}
 			tree_iterator& operator-- ()
 			{
-				if (_node == nullptr && _root == nullptr)
+				if (!_node && !_root)
 					return (*this);
-				if (_node == nullptr)
+				if (!_node)
 					_node = tree_max(_root);
 				else
 				{
@@ -210,9 +208,9 @@ namespace ft {
 			}
 			tree_iterator operator-- (int)
 			{
-				tree_iterator tmp(*this);
+				tree_iterator temp(*this);
 				--(*this);
-				return (tmp);
+				return (temp);
 			}
 			operator tree_const_iterator<IteratorType>() const {
 				return tree_const_iterator<IteratorType>(_node, _root);

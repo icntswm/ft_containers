@@ -29,12 +29,18 @@ namespace ft
 			node*			_root;
 		public:
 			//CONSTRUCTOR ------------------------------------------------------------------------
-			rb_tree() : _size(0), _alloc_value(allocator_type()), _alloc_node(node_allocator()), _comp(compare_type()), _root(nullptr){}
+			rb_tree() : _size(0), _alloc_value(allocator_type()), _alloc_node(node_allocator()), _comp(compare_type()), _root(nullptr) {}
 			explicit rb_tree(const compare_type& comp, const allocator_type& alloc = allocator_type()) : _size(0), _alloc_value(alloc), _alloc_node(node_allocator()), _comp(comp), _root(nullptr) {}
-			rb_tree(const rb_tree& other) : _size(0), _alloc_value(other._alloc_value), _alloc_node(other._alloc_node), _comp(other._comp), _root(nullptr)
+			template< class InputIt >
+			rb_tree(InputIt first, InputIt last, const compare_type& comp = compare_type(), const allocator_type& alloc = allocator_type()) : _size(0), _alloc_value(alloc), _alloc_node(node_allocator()), _comp(comp)
+			{
+				clear_tree(_root);
+				for (InputIt it = first; it != last; ++it)
+					insert(*it);
+			}
+			rb_tree(const rb_tree& other) : _size(other._size), _alloc_value(other._alloc_value), _alloc_node(other._alloc_node), _comp(other._comp), _root(nullptr)
 			{
 				copy_tree(&_root, nullptr, other._root);
-				_size = other._size;
 			}
 			//DESTRUCTOR ------------------------------------------------------------------------
 			~rb_tree()
@@ -80,12 +86,43 @@ namespace ft
 			//INSERT ------------------------------------------------------------------------
 			ft::pair<iterator,bool> insert (const value_type& value)
 			{
-				ft::pair<node*, bool> tmp = insert_node(&_root, value);
-				return (ft::make_pair(iterator(tmp.first, _root), tmp.second));
+				node* n = new_node(value);
+				node* y = nullptr;
+				node* x = _root;
+				ft::pair<node*, bool> temp;
+				int point = 0;
+
+				while (x != nullptr)
+				{
+					y = x;
+					if (_comp(n->data, x->data))
+						x = x->left;
+					else if (_comp(x->data, n->data))
+						x = x->right;
+					else {
+						delete_node(n);
+						point = 1;
+						temp = ft::make_pair(x, false);
+						break ;
+					}
+				}
+				if (!point) {
+					n->parent = y;
+					if (y == nullptr) {
+						_root = n;
+					}
+					else if (_comp(n->data, y->data))
+						y->left = n;
+					else if (_comp(y->data, n->data))
+						y->right = n;
+					insert_fix(n);
+					temp = ft::make_pair(n, true);
+				}
+				return (ft::make_pair(iterator(temp.first, _root), temp.second));
 			}
 			iterator insert(iterator hint, const value_type& value)
 			{
-				insert_node(&_root, value);
+				insert(value);
 				return (iterator(hint._node, _root));
 			}
 			template<class InputIt>
@@ -363,6 +400,7 @@ namespace ft
 			node*	new_node(const value_type& data, node *parent = nullptr, node *left = nullptr, node *right = nullptr, COLOR col = RED)
 			{
 				node* temp = _alloc_node.allocate(1);
+
 				_alloc_node.construct(temp, node(data, parent, left, right, col));
 				++_size;
 				return (temp);
@@ -374,8 +412,6 @@ namespace ft
 					copy_tree(&(*old_n)->left, *old_n, new_n->left);
 					copy_tree(&(*old_n)->right, *old_n, new_n->right);
 				}
-				else
-					return ;
 			}
 			void	delete_node(node *n)
 			{
@@ -391,38 +427,7 @@ namespace ft
 					delete_node(n);
 				}
 				else
-				{
 					_root = nullptr;
-					return ;
-				}
-			}
-			
-			ft::pair<node*, bool> insert_node(node **tree, const value_type& key)
-			{
-				node* n;
-
-				if (!(*tree))
-					n = nullptr;
-				else
-					n = (*tree)->parent;
-				while (*tree)
-				{
-					if (_comp(key, (*tree)->data))
-					{
-						n = *tree;
-						tree = &((*tree)->left);
-					}
-					else if (_comp((*tree)->data, key))
-					{
-						n = *tree;
-						tree = &((*tree)->right);
-					}
-					else
-						return (ft::make_pair(*tree, false));
-				}
-				*tree = new_node(key, n);
-				insert_fix(*tree);
-				return (ft::make_pair(*tree, true));
 			}
 			void insert_fix(node *n)
 			{

@@ -2,6 +2,7 @@
 # define UTILITIES_HPP
 
 #include <iostream>
+#include <limits>
 
 namespace ft {
     enum COLOR{BLACK, RED};
@@ -15,20 +16,16 @@ namespace ft {
         node_tree*	right;
         COLOR       color;
         
-        explicit node_tree(const data_type& d = nullptr) : data(d), parent(nullptr), left(nullptr), right(nullptr), color(RED) {}
+        explicit node_tree() : data(nullptr), parent(nullptr), left(nullptr), right(nullptr), color(RED) {}
         node_tree(const data_type& d, node_tree* par, node_tree* lft, node_tree* rght, COLOR col) : data(d), parent(par), left(lft), right(rght), color(col) {}
-        // node_tree(const node_tree& nt)
-        // {
-        // 	*this = nt;
-        // }
-        // node_tree& operator=(const node_tree& nt) {
-        // 	data = nt.data;
-        // 	right = nt.right;
-        // 	left = nt.left;
-        // 	parent = nt.parent;
-        // 	color = nt.color;
-        // 	return (*this);
-        // }
+        node_tree& operator=(const node_tree& nt) {
+        	data = nt.data;
+        	right = nt.right;
+        	left = nt.left;
+        	parent = nt.parent;
+        	color = nt.color;
+        	return (*this);
+        }
     };
 
     template <class Iterator>
@@ -162,7 +159,6 @@ namespace ft {
         template<class U, class V>
         pair (const pair<U, V>& pr) : first(pr.first), second(pr.second) {}
         pair (const first_type& a, const second_type& b) : first(a), second(b) {}
-
         pair& operator= (const pair& pr)
         {
             first = pr.first;
