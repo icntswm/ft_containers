@@ -18,7 +18,7 @@ namespace ft
 			typedef node_tree<value_type>									node;
 			typedef typename allocator_type::template rebind<node>::other	node_allocator;
 			typedef ft::tree_iterator<value_type>							iterator;
-			typedef ft::tree_const_iterator<value_type>						const_iterator;
+			typedef ft::tree_iterator<value_type>						const_iterator;
 			typedef ft::reverse_iterator<iterator>							reverse_iterator;
 			typedef ft::reverse_iterator<const_iterator>					const_reverse_iterator;
 		private:
