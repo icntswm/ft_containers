@@ -226,11 +226,25 @@ namespace ft
 			}
 			iterator end()
 			{
-				return (iterator(nullptr, _root));
+				node *tmp = _root;
+				while (tmp && tmp->right != nullptr)
+					tmp = tmp->right;
+				if (!tmp)
+					return (const_iterator(nullptr, _root));
+				ft::pair<node*, bool> temp = ft::make_pair(tmp->right, true);
+				return (iterator(temp.first, _root));
+				// return (iterator(nullptr, _root));
 			}
 			const_iterator end() const
 			{
-				return (const_iterator(nullptr, _root));
+				node *tmp = _root;
+				while (tmp && tmp->right != nullptr)
+					tmp = tmp->right;
+				if (!tmp)
+					return (const_iterator(nullptr, _root));
+				ft::pair<node*, bool> temp = ft::make_pair(tmp->right, true);
+				return (const_iterator(temp.first, _root));
+				// return (const_iterator(nullptr, _root));
 			}
 			reverse_iterator rbegin()
 			{
@@ -378,13 +392,13 @@ namespace ft
 		private:
 			node* tree_min(node* x)
 			{
-				while (x->left != nullptr)
+				while (x && x->left != nullptr)
 					x = x->left;
 				return (x);
 			}
 			node* tree_max(node* x)
 			{
-				while (x->right != nullptr)
+				while (x && x->right != nullptr)
 					x = x->right;
 				return (x);
 			}
