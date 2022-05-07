@@ -7,7 +7,7 @@
 
 namespace ft
 {
-	template<class Key, class T, class Compare = std::less<Key>, class Allocator = std::allocator<std::pair<const Key, T> > >
+	template<class Key, class T, class Compare = std::less<Key>, class Allocator = std::allocator<ft::pair<const Key, T> > >
 	class map {
 		public:
 			typedef Key										key_type;
@@ -22,7 +22,7 @@ namespace ft
 			typedef typename allocator_type::pointer		pointer;
 			typedef typename allocator_type::const_pointer	const_pointer;
 			typedef ft::tree_iterator<value_type>			iterator;
-			typedef ft::tree_iterator<value_type>		const_iterator;
+			typedef ft::tree_iterator<value_type>			const_iterator;
 			typedef ft::reverse_iterator<iterator>			reverse_iterator;
 			typedef ft::reverse_iterator<const_iterator>	const_reverse_iterator;
 			class value_compare {
@@ -37,7 +37,7 @@ namespace ft
 					}
 			};
 		private:
-			rb_tree<Key, T, value_compare, allocator_type> _tree;
+			rb_tree<value_type, mapped_type, value_compare, allocator_type> _tree;
 			key_compare _comp;
 			ft::pair<key_type, mapped_type> pair_instance(const key_type& key) const
 			{
@@ -174,7 +174,7 @@ namespace ft
 				return (_tree.erase(pair_instance(key)));
 			}
 			//SWAP ------------------------------------------------------------------------
-			void	swap(map & other)
+			void	swap(map& other)
 			{
 				_tree.swap(other._tree);
 			}
