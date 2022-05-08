@@ -29,7 +29,7 @@ namespace ft
 			node*			_root;
 		public:
 			//CONSTRUCTOR ------------------------------------------------------------------------
-			rb_tree() : _size(0), _alloc_value(allocator_type()), _alloc_node(node_allocator()), _comp(compare_type()), _root(nullptr) {}
+			rb_tree() : _size(0), _alloc_value(allocator_type()), _alloc_node(node_allocator()), _comp(), _root(nullptr) {}
 			explicit rb_tree(const compare_type& comp, const allocator_type& alloc = allocator_type()) : _size(0), _alloc_value(alloc), _alloc_node(node_allocator()), _comp(comp), _root(nullptr) {}
 			template< class InputIt >
 			rb_tree(InputIt first, InputIt last, const compare_type& comp = compare_type(), const allocator_type& alloc = allocator_type()) : _size(0), _alloc_value(alloc), _alloc_node(node_allocator()), _comp(comp)
@@ -76,7 +76,7 @@ namespace ft
 			//MAX_SIZE ------------------------------------------------------------------------
 			size_type max_size() const
 			{
-				return (std::numeric_limits<difference_type>::max() / sizeof(difference_type));
+				return (std::numeric_limits<size_type>::max() / sizeof(size_type));
 			}
 			//CLEAR ------------------------------------------------------------------------
 			void clear()

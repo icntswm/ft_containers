@@ -1,177 +1,5 @@
-// #include "stack.hpp"
-#include "vector.hpp"
-// #include "stdio.h"
-
-#include "iterator.hpp"
-#include <stack>
+#include "../vector.hpp"
 #include <vector>
-#include <deque>
-#include <iostream>
-// #define BUFFER_SIZE 4096
-// struct Buffer
-// {
-// 	int idx;
-// 	char buff[BUFFER_SIZE];
-// };
-
-// int main()
-// {
-//     // ft::Stack<int> st;
-
-//     // test_Stack<std::stack<int, std::vector<int> >, std::vector<int> >();
-
-//     // std::vector<int>::reverse_iterator it;
-
-    // ft::vector<int> vec;
-//     // ft::vector<int>::iterator lol;
-//     // ft::vector<int>::reverse_iterator ri;
-
-
-    // vec.push_back(5);
-//     // vec.assign(4,1);
-//     // vec.pop_back();
-//     // vec.pop_back();
-    
-//     // std::cout << "size: " << vec.size() << " capacity: " << vec.capacity() << std::endl;
-//     // for (lol = vec.begin(); lol != vec.end(); lol++)
-//     // {
-//     //     std::cout << *lol << std::endl;
-//     // }
-
-//     // for (ri = vec.rbegin(); ri != vec.rend(); ri++)
-//     // {
-//     //     std::cout << *ri << std::endl;
-//     // }
-
-
-
-//         // ft::vector<int> vector;
-//         // std::vector<int> v;
-//         // vector.assign(10, 1);
-//         // v.assign(10, 1);
-//         int _ratio = 10000;
-//         std::vector<int> vector;
-//         std::vector<int> v;
-//         std::vector<int> tmp;
-//         tmp.assign(2600 * _ratio, 1);
-//         vector.assign(4200 * _ratio, 1);
-//         vector.insert(vector.end() - 1000 * _ratio, tmp.begin(), tmp.end());
-//         v.push_back(vector[3]);
-//         v.push_back(vector.size());
-//         v.push_back(vector.capacity());
-
-//         std::vector<int>::iterator it = v.begin();
-
-//         std::cout << "STD: " << "\n";
-//         for (it = v.begin(); it != v.end(); it++) {
-//             std::cout << *it << "\n";
-//         }
-//         std::cout << "STD size: " << v.size() << "\n";
-//         std::cout << "STD capacity: " << v.capacity() << "\n";
-
-
-//         ft::vector<int> vector1;
-//         ft::vector<int> v1;
-//         ft::vector<int> tmp1;
-//         tmp1.assign(2600 * _ratio, 1);
-//         vector1.assign(4200 * _ratio, 1);
-//         vector1.insert(vector1.end() - 1000 * _ratio, tmp1.begin(), tmp1.end());
-//         v1.push_back(vector1[3]);
-//         v1.push_back(vector1.size());
-//         v1.push_back(vector1.capacity());
-
-//         ft::vector<int>::iterator iter;
-
-//         std::cout << "MY: " << "\n";
-//         for (iter = v1.begin(); iter != v1.end(); iter++) {
-//             std::cout << *iter<< "\n";
-//         }
-//         std::cout << "MY size: " << v1.size() << "\n";
-//         std::cout << "MY capacity: " << v1.capacity() << "\n";
-
-
-
-//         // if (v == v1) {
-//         //     std::cout << "OK\n";
-//         // }
-//         // else {
-//         //     std::cout << "FAIL\n";
-//         // }
-//         // ft::vector<int> vector;
-//         // std::vector<int> v;
-//         // vector.assign(10, 1);
-//         // vector.insert(vector.end() - 8, 2);
-
-//         // v.assign(10, 1);
-//         // v.insert(v.end() - 8, 2);
-//         // // v.push_back(vector[212]);
-//         // // v.push_back(vector.size());
-//         // // v.push_back(vector.capacity());
-//         // // std::vector<int>::iterator it = v.begin();
-//         // ft::vector<int>::iterator myIt = vector.begin();
-//         // std::vector<int>::iterator it = v.begin();
-
-//         // // v.insert(it, 13);
-//         // // vector.insert(myIt, 13);
-
-
-//         // v.insert(it, 3, 7);
-//         // vector.insert(myIt, 3, 7);
-
-
-//         // std::cout << "STD: " << "\n";
-//         // for (it = v.begin(); it != v.end(); it++) {
-//         //     std::cout << *it << "\n";
-//         // }
-
-//         // std::cout << "MY: " << "\n";
-//         // for (myIt = vector.begin(); myIt != vector.end(); myIt++) {
-//         //     std::cout << *myIt << "\n";
-//         // }
-//         // std::cout << "STD: " << "\n";
-//         // for (it = v.begin(); it != v.end(); it++) {
-//             // std::cout << *it << "\n";
-//         // }
-
-
-
-//         // v.push_back(*(vector.rend() - 1));
-//         // v.push_back(*(vector.rend() - 2));
-
-
-//         // std::vector<int> lol;
-//         // lol.assign(1000, 1);
-//         // std::cout << "my: " << *(vector.rend() - 1) << std::endl;
-//         // std::cout << "std: " << *(lol.rend() - 1) << std::endl;
-
-
-
-
-
-
-
-//     // ft::vector<int> vector;
-//     // std::vector<int> v;
-//     // vector.assign(1000, 1);
-//     // // g_start2 = timer();
-//     // v.push_back(*(vector.end() - 1));
-//     // v.push_back(*(vector.end() - 2));
-//     // g_end2 = timer();
-//     // return v;
-
-//     // vec.resize(10);
-//     // std::cout << "size: " << vec.size() << " capacity: " << vec.capacity() << std::endl;
-
-//     // ft::vector<int> foo (3,100);   // three ints with a value of 100
-//     // ft::vector<int> bar (2,200);   // two ints with a value of 200
-
-//     // if (foo==bar) std::cout << "foo and bar are equal\n";
-//     // if (foo!=bar) std::cout << "foo and bar are not equal\n";
-//     // if (foo< bar) std::cout << "foo is less than bar\n";
-//     // if (foo> bar) std::cout << "foo is greater than bar\n";
-//     // if (foo<=bar) std::cout << "foo is less than or equal to bar\n";
-//     // if (foo>=bar) std::cout << "foo is greater than or equal to bar\n";
-// }
 
 class B {
 public:
@@ -224,7 +52,7 @@ void insert_test() {
         std::cout << *it1 << " ";
     }
 
-    std::cout << "\033[33m\nSTD: \033[0m\n";
+    std::cout << "\033[34m\nSTD: \033[0m\n";
     std::vector<int>::iterator it2;
     for (it2 = vector1.begin(); it2 != vector1.end(); it2++) {
         std::cout << *it2 << " ";
@@ -253,7 +81,7 @@ void insert_test() {
         std::cout << *it3 << " ";
     }
 
-    std::cout << "\033[33m\nSTD: \033[0m\n";
+    std::cout << "\033[34m\nSTD: \033[0m\n";
     std::vector<int>::iterator it4;
     for (it4 = vector2.begin(); it4 != vector2.end(); it4++) {
         std::cout << *it4 << " ";
@@ -288,7 +116,7 @@ void insert_test() {
         std::cout << *it5 << " ";
     }
 
-    std::cout << "\033[33m\nSTD: \033[0m\n";
+    std::cout << "\033[34m\nSTD: \033[0m\n";
     std::vector<int>::iterator it6;
     for (it6 = vector3.begin(); it6 != vector3.end(); it6++) {
         std::cout << *it6 << " ";
@@ -324,7 +152,7 @@ void erase_test()
         std::cout << *it1 << " ";
     }
 
-    std::cout << "\033[33m\nSTD: \033[0m\n";
+    std::cout << "\033[34m\nSTD: \033[0m\n";
     for (it2 = vector1.begin(); it2 != vector1.end(); it2++) {
         std::cout << *it2 << " ";
     }
@@ -356,7 +184,7 @@ void erase_test()
         std::cout << *it3 << " ";
     }
 
-    std::cout << "\033[33m\nSTD: \033[0m\n";
+    std::cout << "\033[34m\nSTD: \033[0m\n";
     for (it4 = vector2.begin(); it4 != vector2.end(); it4++) {
         std::cout << *it4 << " ";
     }
@@ -428,7 +256,7 @@ void swap_test() {
     vv.push_back(std_vector.capacity());
 
     std::vector<int>::iterator stdvit;
-    std::cout << "\033[33m\nSTD: \033[0m\n";
+    std::cout << "\033[34m\nSTD: \033[0m\n";
     for (stdvit = vv.begin(); stdvit != vv.end(); stdvit++){
         std::cout << *stdvit << " ";
     }
@@ -459,7 +287,7 @@ void    assign_test()
         std::cout << *iter3 << " ";
     }
 
-    std::cout << "\033[33m\nSTD: \033[0m\n";
+    std::cout << "\033[34m\nSTD: \033[0m\n";
     for (iter4 = vect2.begin(); iter4 != vect2.end(); iter4++) {
         std::cout << *iter4 << " ";
     }
@@ -481,7 +309,7 @@ void    assign_test()
         std::cout << *iter3 << " ";
     }
 
-    std::cout << "\033[33m\nSTD: \033[0m\n";
+    std::cout << "\033[34m\nSTD: \033[0m\n";
     for (iter4 = vect2.begin(); iter4 != vect2.end(); iter4++) {
         std::cout << *iter4 << " ";
     }
@@ -507,7 +335,7 @@ void at_test()
     std::cout << "\033[34mMY: \033[0m\n";
     std::cout << vecc2.at(2);
 
-    std::cout << "\033[33m\nSTD: \033[0m\n";
+    std::cout << "\033[34m\nSTD: \033[0m\n";
     std::cout << vect2.at(2);
     std::cout << "\n";
 }
@@ -531,7 +359,7 @@ void back_test()
     std::cout << "\033[34mMY: \033[0m\n";
     std::cout << vecc2.back();
 
-    std::cout << "\033[33m\nSTD: \033[0m\n";
+    std::cout << "\033[34m\nSTD: \033[0m\n";
     std::cout << vect2.back();
     std::cout << "\n";
 }
@@ -557,7 +385,7 @@ void begin_end_test()
         std::cout << *iter3 << " ";
     }
 
-    std::cout << "\033[33m\nSTD: \033[0m\n";
+    std::cout << "\033[34m\nSTD: \033[0m\n";
     for (iter4 = vect2.begin() + 1; iter4 != vect2.end(); iter4++) {
         std::cout << *iter4 << " ";
     }
@@ -585,7 +413,7 @@ void capacity_test()
     std::cout << "\033[34mMY: \033[0m\n";
     std::cout << vecc2.capacity();
 
-    std::cout << "\033[33m\nSTD: \033[0m\n";
+    std::cout << "\033[34m\nSTD: \033[0m\n";
     std::cout << vect2.capacity();
     std::cout << "\n";
 }
@@ -613,7 +441,7 @@ void clear_test()
         std::cout << *iter3 << " ";
     }
 
-    std::cout << "\033[33m\nSTD before: \033[0m\n";
+    std::cout << "\033[34m\nSTD before: \033[0m\n";
     std::cout << "size: " << vect2.size() << " | capacity: " << vecc2.capacity() << "\n";
     for (iter4 = vect2.begin(); iter4 != vect2.end(); iter4++) {
         std::cout << *iter4 << " ";
@@ -626,7 +454,7 @@ void clear_test()
         std::cout << *iter3 << " ";
     }
 
-    std::cout << "\033[33mSTD after: \033[0m\n";
+    std::cout << "\033[34mSTD after: \033[0m\n";
     std::cout << "size: " << vect2.size() << " | capacity: " << vecc2.capacity() << "\n";
     for (iter4 = vect2.begin(); iter4 != vect2.end(); iter4++) {
         std::cout << *iter4 << " ";
@@ -653,7 +481,7 @@ void data_test()
     std::cout << "\033[34mMY: \033[0m\n";
     std::cout << *vecc2.data();
 
-    std::cout << "\033[33m\nSTD: \033[0m\n";
+    std::cout << "\033[34m\nSTD: \033[0m\n";
     std::cout << *vect2.data();
     std::cout << "\n";
 }
@@ -677,7 +505,7 @@ void empty_test()
     std::cout << "\033[34mMY: \033[0m\n";
     std::cout << vecc2.empty();
 
-    std::cout << "\033[33m\nSTD: \033[0m\n";
+    std::cout << "\033[34m\nSTD: \033[0m\n";
     std::cout << vect2.empty();
     std::cout << "\n";
 }
@@ -701,7 +529,7 @@ void front_test()
     std::cout << "\033[34mMY: \033[0m\n";
     std::cout << vecc2.front();
 
-    std::cout << "\033[33m\nSTD: \033[0m\n";
+    std::cout << "\033[34m\nSTD: \033[0m\n";
     std::cout << vect2.front();
     std::cout << "\n";
 }
@@ -727,7 +555,7 @@ void max_size_test()
     std::cout << "\033[34mMY: \033[0m\n";
     std::cout << vecc2.size() << " / " << vecc2.max_size();
 
-    std::cout << "\033[33m\nSTD: \033[0m\n";
+    std::cout << "\033[34m\nSTD: \033[0m\n";
     std::cout << vect2.size() << " / " << vect2.max_size();
     std::cout << "\n";
 }
@@ -757,7 +585,7 @@ void operator_equals_test()
         std::cout << *iter3 << " ";
     }
 
-    std::cout << "\033[33m\nSTD: \033[0m\n";
+    std::cout << "\033[34m\nSTD: \033[0m\n";
     for (iter4 = temp_vect.begin(); iter4 != temp_vect.end(); iter4++) {
         std::cout << *iter4 << " ";
     }
@@ -781,7 +609,7 @@ void operator_squarebrek_test()
     std::cout << "\033[34mMY: \033[0m\n";
     std::cout << vecc2[1];
 
-    std::cout << "\033[33m\nSTD: \033[0m\n";
+    std::cout << "\033[34m\nSTD: \033[0m\n";
     std::cout << vect2[1];
     std::cout << "\n";
 }
@@ -809,7 +637,7 @@ void pop_push_back_test()
         std::cout << *iter3 << " ";
     }
 
-    std::cout << "\033[33m\nSTD: \033[0m\n";
+    std::cout << "\033[34m\nSTD: \033[0m\n";
     for (iter4 = vect2.begin(); iter4 != vect2.end(); iter4++) {
         std::cout << *iter4 << " ";
     }
@@ -839,7 +667,7 @@ void rbegin_rend_test()
         std::cout << *iter3 << " ";
     }
 
-    std::cout << "\033[33m\nSTD: \033[0m\n";
+    std::cout << "\033[34m\nSTD: \033[0m\n";
     for (iter4 = vect2.rbegin() + 1; iter4 != vect2.rend() - 1; iter4++) {
         std::cout << *iter4 << " ";
     }
@@ -859,7 +687,7 @@ void reserve_test()
     std::cout << "\033[34mMY: \033[0m\n";
     std::cout << vecc2.capacity();
 
-    std::cout << "\033[33m\nSTD: \033[0m\n";
+    std::cout << "\033[34m\nSTD: \033[0m\n";
     std::cout << vect2.capacity();
     std::cout << "\n";
 }
@@ -880,7 +708,7 @@ void resize_test()
         std::cout << *iter3 << " ";
     }
 
-    std::cout << "\033[33m\nSTD: \033[0m\n";
+    std::cout << "\033[34m\nSTD: \033[0m\n";
     std::cout << vect2.size() << "\n";
     for (iter4 = vect2.rbegin() + 1; iter4 != vect2.rend() - 1; iter4++) {
         std::cout << *iter4 << " ";
@@ -918,7 +746,7 @@ void iter_test()
     // std::cout << *my_it << "\n";
 
 
-    std::cout << "\033[33mSTD: \033[0m\n";
+    std::cout << "\033[34mSTD: \033[0m\n";
     std::vector<int>::iterator it = vec.begin() + 7;
     std::vector<int>::const_iterator const_it2 = vec.begin();
 
@@ -937,7 +765,7 @@ void iter_test()
     for (my_i = my_vec.begin(); my_i != my_vec.end(); my_i++) {
         std::cout << *my_i << " ";
     }
-    std::cout << "\033[33m\nSTD: \033[0m\n";
+    std::cout << "\033[34m\nSTD: \033[0m\n";
     for (std_i = vec.begin(); std_i != vec.end(); std_i++) {
         std::cout << *std_i << " ";
     }
@@ -947,7 +775,7 @@ void iter_test()
     for (my_i = my_vec.begin() + 4; my_i != my_vec.end() - 1; my_i++) {
         std::cout << *my_i << " ";
     }
-    std::cout << "\033[33m\nSTD: \033[0m\n";
+    std::cout << "\033[34m\nSTD: \033[0m\n";
     for (std_i = vec.begin() + 4; std_i != vec.end() - 1; std_i++) {
         std::cout << *std_i << " ";
     }
@@ -961,7 +789,7 @@ void iter_test()
     for (const_my_i = my_vec.begin(); const_my_i != my_vec.end(); const_my_i++) {
         std::cout << *const_my_i << " ";
     }
-    std::cout << "\033[33m\nSTD: \033[0m\n";
+    std::cout << "\033[34m\nSTD: \033[0m\n";
     for (const_std_i = vec.begin(); const_std_i != vec.end(); const_std_i++) {
         std::cout << *const_std_i << " ";
     }
@@ -971,7 +799,7 @@ void iter_test()
     for (const_my_i = my_vec.begin() + 4; const_my_i != my_vec.end() - 1; const_my_i++) {
         std::cout << *const_my_i << " ";
     }
-    std::cout << "\033[33m\nSTD: \033[0m\n";
+    std::cout << "\033[34m\nSTD: \033[0m\n";
     for (const_std_i = vec.begin() + 4; const_std_i != vec.end() - 1; const_std_i++) {
         std::cout << *const_std_i << " ";
     }
@@ -990,7 +818,7 @@ void iter_test()
     // std::cout << *my_rit << "\n";
 
 
-    std::cout << "\033[33mSTD: \033[0m\n";
+    std::cout << "\033[34mSTD: \033[0m\n";
     std::vector<int>::reverse_iterator rit = vec.rbegin() + 7;
     std::vector<int>::const_reverse_iterator const_rit2 = vec.rbegin();
 
@@ -1008,7 +836,7 @@ void iter_test()
     for (my_ri = my_vec.rbegin(); my_ri != my_vec.rend(); my_ri++) {
         std::cout << *my_ri << " ";
     }
-    std::cout << "\033[33m\nSTD: \033[0m\n";
+    std::cout << "\033[34m\nSTD: \033[0m\n";
     for (std_ri = vec.rbegin(); std_ri != vec.rend(); std_ri++) {
         std::cout << *std_ri << " ";
     }
@@ -1018,7 +846,7 @@ void iter_test()
     for (my_ri = my_vec.rbegin() + 4; my_ri != my_vec.rend() - 1; my_ri++) {
         std::cout << *my_ri << " ";
     }
-    std::cout << "\033[33m\nSTD: \033[0m\n";
+    std::cout << "\033[34m\nSTD: \033[0m\n";
     for (std_ri = vec.rbegin() + 4; std_ri != vec.rend() - 1; std_ri++) {
         std::cout << *std_ri << " ";
     }
@@ -1032,7 +860,7 @@ void iter_test()
     for (const_my_ri = my_vec.rbegin(); const_my_ri != my_vec.rend(); const_my_ri++) {
         std::cout << *const_my_ri << " ";
     }
-    std::cout << "\033[33m\nSTD: \033[0m\n";
+    std::cout << "\033[34m\nSTD: \033[0m\n";
     for (const_std_ri = vec.rbegin(); const_std_ri != vec.rend(); const_std_ri++) {
         std::cout << *const_std_ri << " ";
     }
@@ -1042,7 +870,7 @@ void iter_test()
     for (const_my_ri = my_vec.rbegin() + 4; const_my_ri != my_vec.rend() - 1; const_my_ri++) {
         std::cout << *const_my_ri << " ";
     }
-    std::cout << "\033[33m\nSTD: \033[0m\n";
+    std::cout << "\033[34m\nSTD: \033[0m\n";
     for (const_std_ri = vec.rbegin() + 4; const_std_ri != vec.rend() - 1; const_std_ri++) {
         std::cout << *const_std_ri << " ";
     }

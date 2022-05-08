@@ -29,8 +29,7 @@ namespace ft
 				protected:
 					key_compare _comp;
 				public:
-					value_compare() : _comp(){}
-					value_compare(key_compare comp) : _comp(comp) {}
+					value_compare(key_compare comp = key_compare()) : _comp(comp) {}
 					bool operator() (const value_type& lhs, const value_type& rhs) const
 					{
 						return (_comp(lhs.first, rhs.first));
@@ -161,13 +160,13 @@ namespace ft
 				_tree.insert(first, last);
 			}
 			//ERASE ------------------------------------------------------------------------
-			void erase(iterator pos)
-			{
-				_tree.erase(pos);
-			}
 			void erase(iterator first, iterator last)
 			{
 				_tree.erase(first, last);
+			}
+			void erase(iterator pos)
+			{
+				_tree.erase(pos);
 			}
 			size_type erase(const key_type& key)
 			{
@@ -230,7 +229,7 @@ namespace ft
 			//VALUE_COMP ------------------------------------------------------------------------
 			value_compare value_comp() const
 			{ 
-				return (value_compare(_comp)); 
+				return (value_compare(key_comp())); 
 			}
 	};
 	//OPERATOR == != < <= > >= ------------------------------------------------------------------------

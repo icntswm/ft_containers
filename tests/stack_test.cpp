@@ -1,29 +1,8 @@
-#include "stack.hpp"
+#include "../stack.hpp"
 #include <stack>
-void size_test()
-{
-    // std::cout << "\033[31m\n --------- void reserve(size_type n)\033[0m\n";
-    // std::stack<int> st_std;
-    // ft::stack<int> st_my;
-    
-
-    // st_std.push(2);
-    // for (int i = 0; i < st_my.size(); i++) {
-    //     std::cout << st_my[i] << " ";
-    // }
-    // for ( i = 0; i < st_std.size(); i++) {
-    //     std::cout << st_std[i] << " ";
-    // }
-    // std::cout << "\033[34mMY: \033[0m\n";
-    // std::cout << vecc2.capacity();
-
-    // std::cout << "\n\033[33m\nSTD: \033[0m\n";
-    // std::cout << vect2.capacity();
-    // std::cout << "\n";
-}
 
 int main(){
-    std::cout << "\033[31m\n --------- stack test\033[0m\n\n";
+    std::cout << "\033[31m\n --------- STACK TEST ---------\033[0m\n\n";
     std::stack<int> st_std;
     ft::stack<int> st_my;
     
