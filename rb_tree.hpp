@@ -76,7 +76,7 @@ namespace ft
 			//MAX_SIZE ------------------------------------------------------------------------
 			size_type max_size() const
 			{
-				return (std::numeric_limits<size_type>::max() / sizeof(size_type));
+				return (std::numeric_limits<difference_type>::max() / sizeof(difference_type));
 			}
 			//CLEAR ------------------------------------------------------------------------
 			void clear()
@@ -187,7 +187,7 @@ namespace ft
 			}
 			size_type erase(const value_type& key)
 			{
-				iterator it = find(key);
+				iterator it = find_tree(key, true);
 
 				if (!it._node)
 					return (0);
@@ -248,19 +248,26 @@ namespace ft
 			{
 				return (const_reverse_iterator(begin()));
 			}
-			//FIND ------------------------------------------------------------------------
-			iterator find(const value_type& key)
+			//find_tree ------------------------------------------------------------------------
+			iterator find_tree(const value_type& key, bool is_er_cnt)
 			{
+				
 				iterator it = lower_bound(key);
 				if (it != end() && !_comp(key, *it))
 					return (it);
+				if (!is_er_cnt) {
+					return (iterator());
+				}
 				return (end());
 			}
-			const_iterator find(const value_type& key) const
+			const_iterator find_tree(const value_type& key, bool is_er_cnt) const
 			{
 				const_iterator it = lower_bound(key);
 				if (it != end() && !_comp(key, *it))
 					return (it);
+				if (!is_er_cnt) {
+					return (const_iterator());
+				}
 				return (end());
 			}
 			//EQUAL_RANGE ------------------------------------------------------------------------

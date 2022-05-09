@@ -27,6 +27,7 @@ namespace ft {
 			rb_tree<value_type, key_type, key_compare, allocator_type> _tree;
 			key_compare _comp;
 		public:
+		//CONSTRUCTOR ------------------------------------------------------------------------
 			set() : _tree(), _comp() {}
 			explicit set(const value_compare& comp, const allocator_type& alloc = allocator_type()) : _tree(comp, alloc), _comp(comp) {}
 			template< class InputIt >
@@ -36,20 +37,24 @@ namespace ft {
 					_tree.insert(*it);
 			}
 			set(const set& other) : _tree(other._tree), _comp(other._comp) {}
+			//DESTRUCTOR ------------------------------------------------------------------------
 			~set()
 			{
 				clear();
 			}
+			//OPERATOR= ------------------------------------------------------------------------
 			set& operator=(const set& other)
 			{
 				_tree = other._tree;
 				_comp = other._comp;
 				return (*this);
 			}
+			//GET_ALLOCATOR ------------------------------------------------------------------------
 			allocator_type get_allocator() const
 			{
 				return (_tree.get_allocator());
 			}
+			//BEGIN, END, RBEGIN, REND ------------------------------------------------------------------------
 			iterator begin()
 			{
 				return (_tree.begin());
@@ -82,22 +87,27 @@ namespace ft {
 			{
 				return (_tree.rend());
 			}
+			//EMPTY ------------------------------------------------------------------------
 			bool empty() const
 			{
 				return (_tree.empty());
 			}
+			//SIZE ------------------------------------------------------------------------
 			size_type size() const
 			{
 				return (_tree.size());
 			}
+			//MAX_SIZE ------------------------------------------------------------------------
 			size_type max_size() const
 			{
 				return (_tree.max_size());
 			}
+			//CLEAR ------------------------------------------------------------------------
 			void clear()
 			{
 				_tree.clear();
 			}
+			//INSERT ------------------------------------------------------------------------
 			ft::pair<iterator,bool> insert(const value_type& value)
 			{
 				return (_tree.insert(value));
@@ -111,6 +121,7 @@ namespace ft {
 			{
 				_tree.insert(first, last);
 			}
+			//ERASE ------------------------------------------------------------------------
 			void erase(iterator pos)
 			{
 				_tree.erase(pos);
@@ -123,24 +134,28 @@ namespace ft {
 			{
 				return (_tree.erase(key));
 			}
+			//SWAP ------------------------------------------------------------------------
 			void swap(set& other)
 			{
 				_tree.swap(other._tree);
 			}
-			size_type count(const key_type& key) const
-			{
-				if (_tree.find(key) == _tree.end())
-					return (0);
-				return (1);
-			}
+			//FIND ------------------------------------------------------------------------
 			iterator find(const key_type& key)
 			{
-				return (_tree.find(key));//-----------------------------------
+				return (_tree.find_tree(key, true));
 			}
 			const_iterator find(const key_type& key) const
 			{
-				return (_tree.find(key));//-----------------------------------
+				return (_tree.find_tree(key, true));
 			}
+			//COUNT ------------------------------------------------------------------------
+			size_type count(const key_type& key) const
+			{
+				if (_tree.find_tree(key, true) == _tree.end())
+					return (0);
+				return (1);
+			}
+			//EQUAL_RANGE ------------------------------------------------------------------------
 			ft::pair<iterator, iterator> equal_range(const key_type& key)
 			{
 				return (_tree.equal_range(key));
@@ -149,6 +164,7 @@ namespace ft {
 			{
 				return (_tree.equal_range(key));
 			}
+			//LOWER_BOUND ------------------------------------------------------------------------
 			iterator lower_bound(const key_type& key)
 			{
 				return (_tree.lower_bound(key));
@@ -157,6 +173,7 @@ namespace ft {
 			{
 				return (_tree.lower_bound(key));
 			}
+			//UPPER_BOUND ------------------------------------------------------------------------
 			iterator upper_bound(const key_type& key)
 			{
 				return (_tree.upper_bound(key));
@@ -165,10 +182,12 @@ namespace ft {
 			{
 				return (_tree.upper_bound(key));
 			}
+			//KEY_COMP ------------------------------------------------------------------------
 			key_compare key_comp() const
 			{
 				return (_comp);
 			}
+			//VALUE_COMP ------------------------------------------------------------------------
 			value_compare value_comp() const
 			{
 				return (value_compare(_comp));

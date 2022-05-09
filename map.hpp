@@ -177,21 +177,21 @@ namespace ft
 			{
 				_tree.swap(other._tree);
 			}
-			//COUNT ------------------------------------------------------------------------
-			size_type count(const key_type& key) const
-			{
-				if (_tree.find(pair_instance(key)) == _tree.end())
-					return (0);
-				return (1);
-			}
 			//FIND ------------------------------------------------------------------------
 			iterator find(const key_type& key)
 			{
-				return (_tree.find(pair_instance(key)));
+				return (_tree.find_tree(pair_instance(key), false));
 			}
 			const_iterator find(const key_type& key) const
 			{
-				return (_tree.find(pair_instance(key)));
+				return (_tree.find_tree(pair_instance(key), false));
+			}
+			//COUNT ------------------------------------------------------------------------
+			size_type count(const key_type& key) const
+			{
+				if (_tree.find_tree(pair_instance(key), true) == _tree.end())
+					return (0);
+				return (1);
 			}
 			//EQUAL_RANGE ------------------------------------------------------------------------
 			ft::pair<iterator,iterator> equal_range(const key_type& key)
