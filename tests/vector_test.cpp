@@ -849,6 +849,15 @@ void iter_test()
 
 }
 
+void is_integral_test()
+{
+    std::cout << "\033[31m\n --------- IS_INTEGRAL ---------\033[0m\n";
+    std::cout << ft::is_integral<bool>::value << "\n";
+    std::cout << ft::is_integral<float>::value << "\n";
+    std::cout << ft::is_integral<int>::value << "\n";
+    std::cout << ft::is_integral<double>::value << "\n";
+}
+
 int main(){
     assign_test();             
     at_test();                    
@@ -870,6 +879,8 @@ int main(){
     resize_test();                 
     swap_test();                    
     iter_test();
+
+    is_integral_test();
 }
 
 
