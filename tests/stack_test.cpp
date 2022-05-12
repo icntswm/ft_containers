@@ -1,5 +1,7 @@
-#include "../stack.hpp"
 #include <stack>
+#include "../stack.hpp"
+#include <vector>
+#include "../vector.hpp"
 
 int main(){
     std::cout << "\033[31m\n --------- STACK TEST ---------\033[0m\n\n";
@@ -38,4 +40,27 @@ int main(){
     std::cout << "\033[34mft1\033[0m size: " << ft1.size() << " | \033[34mft2\033[0m size: " << ft2.size() << "\n";
     std::cout << "\033[34mft1\033[0m top: " << ft1.top() << " | \033[34mft2\033[0m top: " << ft2.top() << "\n";
 
+
+    //test stack constructor
+    int _ratio = 10000;
+    ft::stack<int> stk;
+
+    std::vector<int> v;
+	ft::vector<int> deque;
+	for (int i = 0; i < 100 * _ratio; ++i)
+		deque.push_back(i);
+	for (int i = 100 * _ratio; i < 200 * _ratio; ++i)
+		stk.push(i);
+	ft::stack<int> stack(deque);
+	ft::stack<int> stack2(stk);
+	ft::stack<int> stack3;
+	stack3 = stack2;
+	while (stack.size() > 0) {
+		v.push_back(stack.top());
+		stack.pop();
+	}
+	while (stack2.size() > 0) {
+		v.push_back(stack2.top());
+		stack2.pop();
+	}
 }

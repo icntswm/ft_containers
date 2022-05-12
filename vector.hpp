@@ -37,7 +37,7 @@ namespace ft {
 			}
 			vector(const vector& x) : _alloc(allocator_type()), _capacity(0), _size(0), _ptr(nullptr)
 			{
-				assign(x.begin(), x.end());
+				*this = x;
 			}
 			template<typename InputIt>
 			vector(InputIt first, InputIt last, const allocator_type & alloc = allocator_type(), typename ft::enable_if<!std::numeric_limits<InputIt>::is_specialized>::type * = 0)
