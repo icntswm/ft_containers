@@ -28,20 +28,21 @@ namespace ft {
 			pointer			_ptr;
         public:
 			//CONSTRUCTOR ---------------------------------------------------------------------------------------------------
-			explicit vector(const allocator_type & alloc = allocator_type()) : _alloc(alloc), _capacity(0), _size(0), _ptr(nullptr)  {}
+			vector() : _alloc(allocator_type()), _capacity(0), _size(0), _ptr(NULL) {}
+			explicit vector(const allocator_type& alloc) : _alloc(alloc), _capacity(0), _size(0), _ptr(NULL)  {}
 			explicit vector (size_type n, const value_type& val = value_type(), const allocator_type& alloc = allocator_type()) : _alloc(alloc), _capacity(n), _size(n)
 			{
 				_ptr = _alloc.allocate(n);
 				for (size_type i = 0; i < n; i++)
 					_alloc.construct(_ptr + i, val);
 			}
-			vector(const vector& x) : _alloc(allocator_type()), _capacity(0), _size(0), _ptr(nullptr)
+			vector(const vector& x) : _alloc(x._alloc), _capacity(0), _size(0), _ptr(NULL)
 			{
 				*this = x;
 			}
 			template<typename InputIt>
-			vector(InputIt first, InputIt last, const allocator_type & alloc = allocator_type(), typename ft::enable_if<!std::numeric_limits<InputIt>::is_specialized>::type * = 0)
-				: _alloc(alloc), _capacity(0), _size(0), _ptr(nullptr)
+			vector(InputIt first, InputIt last, const allocator_type& alloc = allocator_type(), typename ft::enable_if<!std::numeric_limits<InputIt>::is_specialized>::type * = 0)
+				: _alloc(alloc), _capacity(0), _size(0), _ptr(NULL)
 			{
 				assign(first, last);
 			}
@@ -53,7 +54,7 @@ namespace ft {
 					_alloc.deallocate(_ptr, _capacity);
 			}
 			//OPERATOR= ---------------------------------------------------------------------------------------------------
-			vector& operator=(const vector & other)
+			vector& operator=(const vector& other)
 			{
 				for (size_type i = 0; i < _size; i++)
 					_alloc.destroy(_ptr + i);
@@ -158,13 +159,13 @@ namespace ft {
 			pointer data()
 			{
 				if (!_size)
-					return (nullptr);
+					return (NULL);
 				return (_ptr);
 			}
 			const_pointer data() const
 			{
 				if (!_size)
-					return (nullptr);
+					return (NULL);
 				return (_ptr);
 			}
 			//EMPTY ---------------------------------------------------------------------------------------------------

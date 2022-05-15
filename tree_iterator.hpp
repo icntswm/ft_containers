@@ -12,8 +12,8 @@ namespace ft {
 			typedef typename ft::iterator_traits<iterator_type*>::value_type		value_type;
 			typedef typename ft::iterator_traits<iterator_type*>::difference_type	difference_type;
 			typedef typename ft::iterator_traits<iterator_type*>::pointer			pointer;
-			typedef typename ft::iterator_traits<const iterator_type*>::pointer		const_pointer;
 			typedef typename ft::iterator_traits<iterator_type*>::reference			reference;
+			typedef typename ft::iterator_traits<const iterator_type*>::pointer		const_pointer;
 			typedef typename ft::iterator_traits<const iterator_type*>::reference	const_reference;
 			typedef	node_tree<iterator_type>										node;
 			
@@ -22,13 +22,13 @@ namespace ft {
 		private:
 			node* tree_min(node* x)
 			{
-				while (x->left != nullptr)
+				while (x->left != NULL)
 					x = x->left;
 				return (x);
 			}
 			node* tree_max(node* x)
 			{
-				while (x->right != nullptr)
+				while (x->right != NULL)
 					x = x->right;
 				return (x);
 			}
@@ -58,7 +58,7 @@ namespace ft {
 			{
 				return (_node->data);
 			}
-			const_reference operator*() const
+			reference operator*() const
 			{
 				return (_node->data);
 			}
@@ -66,7 +66,7 @@ namespace ft {
 			{
 				return (&_node->data);
 			}
-			const_pointer operator->() const
+			pointer operator->() const
 			{
 				return (&_node->data);
 			}

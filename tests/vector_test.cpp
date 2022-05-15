@@ -505,9 +505,9 @@ void front_test()
     std::cout << "\n";
 }
 
-void max_size_test()
+void size_test()
 {
-    std::cout << "\033[31m\n --------- size_type size() const && size_type max_size() const\033[0m\n";
+    std::cout << "\033[31m\n --------- size_type size() const\033[0m\n";
     std::vector<int> vect2;
     ft::vector<int> vecc2;
     ft::vector<int>::iterator iter3;
@@ -524,10 +524,10 @@ void max_size_test()
     vecc2.assign(111, 1);
     vect2.assign(111, 1);
     std::cout << "\033[34mMY: \033[0m\n";
-    std::cout << vecc2.size() << " / " << vecc2.max_size();
+    std::cout << vecc2.size();
 
     std::cout << "\033[34m\nSTD: \033[0m\n";
-    std::cout << vect2.size() << " / " << vect2.max_size();
+    std::cout << vect2.size();
     std::cout << "\n";
 }
 
@@ -870,7 +870,7 @@ int main(){
     erase_test();                   
     front_test();                  
     insert_test();                
-    max_size_test();                
+    size_test();                
     operator_equals_test();         
     operator_squarebrek_test();     
     pop_push_back_test();           

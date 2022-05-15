@@ -7,10 +7,10 @@
 
 namespace ft
 {
-	template<class Key, class T, class Compare = std::less<Key>, class Allocator = std::allocator<Key> >
+	template<class Key, class T, class Compare, class Allocator >
 	class rb_tree {
 		public:
-			typedef Key														value_type;
+			typedef	Key														value_type;
 			typedef std::size_t												size_type;
 			typedef std::ptrdiff_t											difference_type;
 			typedef Compare													compare_type;
@@ -18,7 +18,7 @@ namespace ft
 			typedef node_tree<value_type>									node;
 			typedef typename allocator_type::template rebind<node>::other	node_allocator;
 			typedef ft::tree_iterator<value_type>							iterator;
-			typedef ft::tree_iterator<value_type>						const_iterator;
+			typedef ft::tree_iterator<value_type>							const_iterator;
 			typedef ft::reverse_iterator<iterator>							reverse_iterator;
 			typedef ft::reverse_iterator<const_iterator>					const_reverse_iterator;
 		private:
@@ -29,8 +29,8 @@ namespace ft
 			node*			_root;
 		public:
 			//CONSTRUCTOR ------------------------------------------------------------------------
-			rb_tree() : _size(0), _alloc_value(allocator_type()), _alloc_node(node_allocator()), _comp(), _root(nullptr) {}
-			explicit rb_tree(const compare_type& comp, const allocator_type& alloc = allocator_type()) : _size(0), _alloc_value(alloc), _alloc_node(node_allocator()), _comp(comp), _root(nullptr) {}
+			rb_tree() : _size(0), _alloc_value(allocator_type()), _alloc_node(node_allocator()), _comp(), _root(NULL) {}
+			explicit rb_tree(const compare_type& comp, const allocator_type& alloc = allocator_type()) : _size(0), _alloc_value(alloc), _alloc_node(node_allocator()), _comp(comp), _root(NULL) {}
 			template< class InputIt >
 			rb_tree(InputIt first, InputIt last, const compare_type& comp = compare_type(), const allocator_type& alloc = allocator_type()) : _size(0), _alloc_value(alloc), _alloc_node(node_allocator()), _comp(comp)
 			{
@@ -38,9 +38,9 @@ namespace ft
 				for (InputIt it = first; it != last; ++it)
 					insert(*it);
 			}
-			rb_tree(const rb_tree& other) : _size(other._size), _alloc_value(other._alloc_value), _alloc_node(other._alloc_node), _comp(other._comp), _root(nullptr)
+			rb_tree(const rb_tree& other) : _size(other._size), _alloc_value(other._alloc_value), _alloc_node(other._alloc_node), _comp(other._comp), _root(NULL)
 			{
-				copy_tree(&_root, nullptr, other._root);
+				copy_tree(&_root, NULL, other._root);
 			}
 			//DESTRUCTOR ------------------------------------------------------------------------
 			~rb_tree()
@@ -52,7 +52,7 @@ namespace ft
 			{
 				node* temp;
 
-				copy_tree(&temp, nullptr, other._root);
+				copy_tree(&temp, NULL, other._root);
 				clear_tree(_root);
 				_root = temp;
 				_size = other._size;
@@ -87,12 +87,12 @@ namespace ft
 			ft::pair<iterator,bool> insert (const value_type& value)
 			{
 				node* n = new_node(value);
-				node* y = nullptr;
+				node* y = NULL;
 				node* x = _root;
 				ft::pair<node*, bool> temp;
 				int point = 0;
 
-				while (x != nullptr)
+				while (x != NULL)
 				{
 					y = x;
 					if (_comp(n->data, x->data))
@@ -108,7 +108,7 @@ namespace ft
 				}
 				if (!point) {
 					n->parent = y;
-					if (y == nullptr) {
+					if (y == NULL) {
 						_root = n;
 					}
 					else if (_comp(n->data, y->data))
@@ -136,11 +136,11 @@ namespace ft
 			void erase(iterator pos)
 			{
 				node* n = pos._node;
-				node* y = (n->left == nullptr || n->right == nullptr) ? n : tree_next(n);
-				node* x = y->left != nullptr ? y->left : y->right;
-				node* w = nullptr;
+				node* y = (n->left == NULL || n->right == NULL) ? n : tree_next(n);
+				node* x = y->left != NULL ? y->left : y->right;
+				node* w = NULL;
 
-				if (x != nullptr)
+				if (x != NULL)
 					x->parent = y->parent;
 				if (!y->parent) {
 					_root = n->right;
@@ -170,13 +170,13 @@ namespace ft
 					y->left = n->left;
 					y->left->parent = y;
 					y->right = n->right;
-					if (y->right != nullptr)
+					if (y->right != NULL)
 						y->right->parent = y;
 					y->color = n->color;
 					if (_root == n)
 						_root = y;
 				}
-				if (remove_black == BLACK && _root != nullptr)
+				if (remove_black == BLACK && _root != NULL)
 					erase_fix(x, w);
 			}
 			void erase(iterator first, iterator last)
@@ -187,7 +187,7 @@ namespace ft
 			}
 			size_type erase(const value_type& key)
 			{
-				iterator it = find_tree(key, true);
+				iterator it = find(key, true);
 
 				if (!it._node)
 					return (0);
@@ -226,11 +226,11 @@ namespace ft
 			}
 			iterator end()
 			{
-				return (iterator(nullptr, _root));
+				return (iterator(NULL, _root));
 			}
 			const_iterator end() const
 			{
-				return (const_iterator(nullptr, _root));
+				return (const_iterator(NULL, _root));
 			}
 			reverse_iterator rbegin()
 			{
@@ -248,10 +248,9 @@ namespace ft
 			{
 				return (const_reverse_iterator(begin()));
 			}
-			//find_tree ------------------------------------------------------------------------
-			iterator find_tree(const value_type& key, bool is_er_cnt)
+			//FIND ------------------------------------------------------------------------
+			iterator find(const value_type& key, bool is_er_cnt)
 			{
-				
 				iterator it = lower_bound(key);
 				if (it != end() && !_comp(key, *it))
 					return (it);
@@ -260,13 +259,13 @@ namespace ft
 				}
 				return (end());
 			}
-			const_iterator find_tree(const value_type& key, bool is_er_cnt) const
+			const_iterator find(const value_type& key, bool is_er_cnt) const
 			{
 				const_iterator it = lower_bound(key);
 				if (it != end() && !_comp(key, *it))
 					return (it);
 				if (!is_er_cnt) {
-					return (const_iterator());
+					return (iterator());
 				}
 				return (end());
 			}
@@ -274,10 +273,10 @@ namespace ft
 			ft::pair<iterator, iterator> equal_range(const value_type& key)
 			{
 				typedef ft::pair<iterator, iterator> pp;
-				node* res = nullptr;
+				node* res = NULL;
 				node* rt = _root;
 
-				while (rt != nullptr)
+				while (rt != NULL)
 				{
 					if (_comp(key, rt->data))
 					{
@@ -287,17 +286,17 @@ namespace ft
 					else if (_comp(rt->data, key))
 						rt = rt->right;
 					else
-						return (pp(iterator(rt, _root), iterator(rt->right != nullptr ? tree_min(rt->right) : res, _root)));
+						return (pp(iterator(rt, _root), iterator(rt->right != NULL ? tree_min(rt->right) : res, _root)));
 				}
 				return (pp(iterator(res, _root), iterator(res, _root)));
 			}
 			ft::pair<const_iterator, const_iterator> equal_range(const value_type& key) const
 			{
 				typedef ft::pair<iterator, iterator> pp;
-				node* res = nullptr;
+				node* res = NULL;
 				node* rt = _root;
 
-				while (rt != nullptr)
+				while (rt != NULL)
 				{
 					if (_comp(key, rt->data))
 					{
@@ -307,7 +306,7 @@ namespace ft
 					else if (_comp(rt->data, key))
 						rt = rt->right;
 					else
-						return (pp(iterator(rt, _root), iterator(rt->right != nullptr ? tree_min(rt->right) : res, _root)));
+						return (pp(iterator(rt, _root), iterator(rt->right != NULL ? tree_min(rt->right) : res, _root)));
 				}
 				return (pp(iterator(res, _root), iterator(res, _root)));
 			}
@@ -315,9 +314,9 @@ namespace ft
 			iterator lower_bound(const value_type& key)
 			{
 				node *curr = _root;
-				node *res = nullptr;
+				node *res = NULL;
 
-				while (curr != nullptr)
+				while (curr != NULL)
 				{
 					if (!_comp(curr->data, key))
 					{
@@ -332,9 +331,9 @@ namespace ft
 			const_iterator lower_bound(const value_type& key) const
 			{
 				node *curr = _root;
-				node *res = nullptr;
+				node *res = NULL;
 
-				while (curr != nullptr)
+				while (curr != NULL)
 				{
 					if (!_comp(curr->data, key))
 					{
@@ -350,9 +349,9 @@ namespace ft
 			iterator upper_bound(const value_type& key)
 			{
 				node *curr = _root;
-				node *res = nullptr;
+				node *res = NULL;
 
-				while (curr != nullptr)
+				while (curr != NULL)
 				{
 					if (_comp(key, curr->data))
 					{
@@ -367,9 +366,9 @@ namespace ft
 			const_iterator upper_bound(const value_type& key) const
 			{
 				node *curr = _root;
-				node *res = nullptr;
+				node *res = NULL;
 
-				while (curr != nullptr)
+				while (curr != NULL)
 				{
 					if (_comp(key, curr->value))
 					{
@@ -385,26 +384,26 @@ namespace ft
 		private:
 			node* tree_min(node* x)
 			{
-				while (x && x->left != nullptr)
+				while (x->left != NULL)
 					x = x->left;
 				return (x);
 			}
 			node* tree_max(node* x)
 			{
-				while (x && x->right != nullptr)
+				while (x->right != NULL)
 					x = x->right;
 				return (x);
 			}
 			node* tree_next(node* n)
 			{
-				if (n->right != nullptr)
+				if (n->right != NULL)
 					return (tree_min(n->right));
 				while (n != n->parent->left)
 					n = n->parent;
 				n = n->parent;
 				return (n);
 			}
-			node*	new_node(const value_type& data, node *parent = nullptr, node *left = nullptr, node *right = nullptr, COLOR col = RED)
+			node*	new_node(const value_type& data, node *parent = NULL, node *left = NULL, node *right = NULL, COLOR col = RED)
 			{
 				node* temp = _alloc_node.allocate(1);
 
@@ -434,7 +433,7 @@ namespace ft
 					delete_node(n);
 				}
 				else
-					_root = nullptr;
+					_root = NULL;
 			}
 			void insert_fix(node *n)
 			{
@@ -447,7 +446,7 @@ namespace ft
 					if (n == n->parent->left)
 					{
 						node* y = n->parent->parent->right;
-						if (y != nullptr && y->color == RED)
+						if (y != NULL && y->color == RED)
 						{
 							n = n->parent;
 							n->color = BLACK;
@@ -471,7 +470,7 @@ namespace ft
 					else
 					{
 						node* y = n->parent->parent->left;
-						if (y != nullptr && y->color == RED)
+						if (y != NULL && y->color == RED)
 						{
 							n = n->parent;
 							n->color = BLACK;
@@ -496,7 +495,7 @@ namespace ft
 			}
 			void erase_fix(node *x, node *w)
 			{
-				if (x != nullptr)
+				if (x != NULL)
 					x->color = BLACK;
 				else
 				{
@@ -513,7 +512,7 @@ namespace ft
 									_root = w;
 								w = w->left->right;
 							}
-							if ((w->left == nullptr || w->left->color == BLACK) && (w->right == nullptr || w->right->color == BLACK))
+							if ((w->left == NULL || w->left->color == BLACK) && (w->right == NULL || w->right->color == BLACK))
 							{
 								w->color = RED;
 								x = w->parent;
@@ -529,7 +528,7 @@ namespace ft
 							}
 							else
 							{
-								if (w->right == nullptr || w->right->color == BLACK)
+								if (w->right == NULL || w->right->color == BLACK)
 								{
 									w->left->color = BLACK;
 									w->color = RED;
@@ -554,7 +553,7 @@ namespace ft
 									_root = w;
 								w = w->right->left;
 							}
-							if ((w->left == nullptr || w->left->color == BLACK) && (w->right == nullptr || w->right->color == BLACK))
+							if ((w->left == NULL || w->left->color == BLACK) && (w->right == NULL || w->right->color == BLACK))
 							{
 								w->color = RED;
 								x = w->parent;
@@ -570,7 +569,7 @@ namespace ft
 							}
 							else
 							{
-								if (w->left == nullptr || w->left->color == BLACK)
+								if (w->left == NULL || w->left->color == BLACK)
 								{
 									w->right->color = BLACK;
 									w->color = RED;
@@ -592,10 +591,10 @@ namespace ft
 				node* y = n->right;
 				n->right = y->left;
 
-				if (n->right != nullptr)
+				if (n->right != NULL)
 					n->right->parent = n;
 				y->parent = n->parent;
-				if (n->parent == nullptr)
+				if (n->parent == NULL)
 					_root = y;
 				else if (n == n->parent->right)
 					n->parent->right = y;
@@ -609,10 +608,10 @@ namespace ft
 				node* y = n->left;
 				n->left = y->right;
 
-				if (n->left != nullptr)
+				if (n->left != NULL)
 					n->left->parent = n;
 				y->parent = n->parent;
-				if (n->parent == nullptr)
+				if (n->parent == NULL)
 					_root = y;
 				else if (n == n->parent->left)
 					n->parent->left = y;

@@ -16,8 +16,8 @@ namespace ft {
         node_tree*	right;
         COLOR       color;
         
-        explicit node_tree() : data(data_type()), parent(nullptr), left(nullptr), right(nullptr), color(RED) {}
-        node_tree(const data_type& d, node_tree* par = nullptr, node_tree* lft = nullptr, node_tree* rght = nullptr, COLOR col = RED) : data(d), parent(par), left(lft), right(rght), color(col) {}
+        explicit node_tree() : data(NULL), parent(NULL), left(NULL), right(NULL), color(RED) {}
+        node_tree(const data_type& d, node_tree* par, node_tree* lft, node_tree* rght, COLOR col) : data(d), parent(par), left(lft), right(rght), color(col) {}
         node_tree& operator=(const node_tree& nt) {
         	data = nt.data;
         	right = nt.right;
@@ -166,12 +166,6 @@ namespace ft {
             return (*this);
         }
     };
-    template <class T1,class T2>
-    pair<T1,T2> make_pair (T1 x, T2 y)
-    {
-        return (pair<T1,T2>(x, y));
-    }
-
     template <class T1, class T2>
     bool operator== (const ft::pair<T1,T2>& lhs, const ft::pair<T1,T2>& rhs)
     {
@@ -202,6 +196,13 @@ namespace ft {
     {
         return (!(lhs < rhs));
     }
+    template <class T1,class T2>
+    ft::pair<T1,T2> make_pair (T1 x, T2 y)
+    {
+        return (ft::pair<T1,T2>(x, y));
+    }
+
+    
 }
 
 #endif

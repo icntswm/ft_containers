@@ -7,7 +7,7 @@
 
 namespace ft
 {
-	template<class Key, class T, class Compare = std::less<Key>, class Allocator = std::allocator<ft::pair<const Key, T> > >
+	template<class Key, class T, class Compare = std::less<Key>, class Allocator = std::allocator<std::pair<const Key, T> > >
 	class map {
 		public:
 			typedef Key										key_type;
@@ -160,38 +160,38 @@ namespace ft
 				_tree.insert(first, last);
 			}
 			//ERASE ------------------------------------------------------------------------
-			void erase(iterator first, iterator last)
-			{
-				_tree.erase(first, last);
-			}
 			void erase(iterator pos)
 			{
 				_tree.erase(pos);
+			}
+			void erase(iterator first, iterator last)
+			{
+				_tree.erase(first, last);
 			}
 			size_type erase(const key_type& key)
 			{
 				return (_tree.erase(pair_instance(key)));
 			}
 			//SWAP ------------------------------------------------------------------------
-			void	swap(map& other)
+			void	swap(map & other)
 			{
 				_tree.swap(other._tree);
-			}
-			//FIND ------------------------------------------------------------------------
-			iterator find(const key_type& key)
-			{
-				return (_tree.find_tree(pair_instance(key), false));
-			}
-			const_iterator find(const key_type& key) const
-			{
-				return (_tree.find_tree(pair_instance(key), false));
 			}
 			//COUNT ------------------------------------------------------------------------
 			size_type count(const key_type& key) const
 			{
-				if (_tree.find_tree(pair_instance(key), true) == _tree.end())
+				if (_tree.find(pair_instance(key), true) == _tree.end())
 					return (0);
 				return (1);
+			}
+			//FIND ------------------------------------------------------------------------
+			iterator find(const key_type& key)
+			{
+				return (_tree.find(pair_instance(key), false));
+			}
+			const_iterator find(const key_type& key) const
+			{
+				return (_tree.find(pair_instance(key), false));
 			}
 			//EQUAL_RANGE ------------------------------------------------------------------------
 			ft::pair<iterator,iterator> equal_range(const key_type& key)
@@ -229,7 +229,7 @@ namespace ft
 			//VALUE_COMP ------------------------------------------------------------------------
 			value_compare value_comp() const
 			{ 
-				return (value_compare(key_comp())); 
+				return (value_compare(_comp)); 
 			}
 	};
 	//OPERATOR == != < <= > >= ------------------------------------------------------------------------

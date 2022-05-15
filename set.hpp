@@ -142,16 +142,16 @@ namespace ft {
 			//FIND ------------------------------------------------------------------------
 			iterator find(const key_type& key)
 			{
-				return (_tree.find_tree(key, true));
+				return (_tree.find(key, true));
 			}
 			const_iterator find(const key_type& key) const
 			{
-				return (_tree.find_tree(key, true));
+				return (_tree.find(key, true));
 			}
 			//COUNT ------------------------------------------------------------------------
 			size_type count(const key_type& key) const
 			{
-				if (_tree.find_tree(key, true) == _tree.end())
+				if (_tree.find(key, true) == _tree.end())
 					return (0);
 				return (1);
 			}
